@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  box-sizing: border-box;
+}
+
+@layer components {
+  // footer
+  .menu-item {
+    @apply flex-col-center gap-1;
+    p {
+      @apply text-xs;
+    }
+  }
+  .active {
+    @apply text-[#FA6FA9];
+  }
+  .unactive {
+    @apply text-gray-500;
+  }
+
+  // flex
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+  .flex-col-center {
+    @apply flex flex-col justify-center items-center;
+  }
+}
