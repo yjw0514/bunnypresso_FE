@@ -1,3 +1,5 @@
+@import './components/Footer.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,18 +10,11 @@ body {
 }
 
 @layer components {
-  // footer
-  .menu-item {
-    @apply flex-col-center gap-1;
-    p {
-      @apply text-xs;
+  .container {
+    @apply pt-8 px-6 w-full pb-[58px];
+    &-with-header {
+      @apply pt-14;
     }
-  }
-  .active {
-    @apply text-[#FA6FA9];
-  }
-  .unactive {
-    @apply text-gray-500;
   }
 
   // flex

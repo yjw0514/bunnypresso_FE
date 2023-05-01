@@ -1,0 +1,13 @@
+// footer
+.menu-item {
+  @apply flex-col-center gap-1 w-[3rem];
+  p {
+    @apply text-xs;
+  }
+}
+.active {
+  @apply text-[#FA6FA9];
+}
+.unactive {
+  @apply text-gray-500;
+}
