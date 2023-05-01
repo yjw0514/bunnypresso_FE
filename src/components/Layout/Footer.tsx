@@ -1,12 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
 import { BsPhoneVibrate } from 'react-icons/bs';
 import { BiNotepad } from 'react-icons/bi';
 import { TbBorderAll } from 'react-icons/tb';
 import { useRouter } from 'next/router';
+import Tooltip from '@/components/Tooltip/index';
 
 export default function Footer() {
   const { pathname } = useRouter();
@@ -32,9 +32,12 @@ export default function Footer() {
           <p>멤버쉽</p>
         </li>
       </Link>
-      <Link href="/order">
+      <Link href="/order" className="relative w-full">
+        <div className="absolute left-1/2 translate-x-[-50%] bottom-12">
+          <Tooltip />
+        </div>
         <li
-          className={`fixed bottom-2 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-[#FA6FA9] shadow-md text-white w-[3.6rem] h-[3.6rem] rounded-full menu-item ${
+          className={`fixed bottom-2 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.6rem] h-[3.6rem] rounded-full menu-item ${
             pathname === '/order' ? 'active' : 'unactive'
           }`}
         >
