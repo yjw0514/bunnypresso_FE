@@ -1,5 +1,6 @@
+import None from '@/components/Common/None';
 import React from 'react';
 
 export default function membership() {
-  return <div>membership</div>;
+  return <None />;
 }

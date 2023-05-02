@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
@@ -10,33 +10,44 @@ import Tooltip from '@/components/Tooltip/index';
 
 export default function Footer() {
   const { pathname } = useRouter();
+  const [showTooltip, setShowTooltip] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowTooltip(false);
+    }, 3000);
+  }, []);
   return (
-    <ul className="fixed bottom-0 left-0 right-0 z-50 flex px-4 py-2 bg-white border border-gray-100 rounded-t-xl flex-between">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex px-4 py-2 bg-white border border-gray-100 rounded-t-xl flex-between">
       <Link href="/">
-        <li className={`menu-item ${pathname === '/' ? 'active' : 'unactive'}`}>
+        <div
+          className={`menu-item ${pathname === '/' ? 'active' : 'unactive'}`}
+        >
           {pathname === '/' ? (
             <RiHomeFill size="20" />
           ) : (
             <RiHomeLine size="20" />
           )}
           <p>홈</p>
-        </li>
+        </div>
       </Link>
       <Link href="/membership">
-        <li
+        <div
           className={`menu-item ${
             pathname === '/membership' ? 'active' : 'unactive'
           }`}
         >
           <BsFillPersonFill size="20" />
           <p>멤버쉽</p>
-        </li>
+        </div>
       </Link>
       <Link href="/order" className="relative w-full">
-        <div className="absolute left-1/2 translate-x-[-50%] bottom-12">
-          <Tooltip />
-        </div>
-        <li
+        {showTooltip && (
+          <div className="absolute left-1/2 translate-x-[-50%] bottom-12">
+            <Tooltip />
+          </div>
+        )}
+        <div
           className={`fixed bottom-2 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.6rem] h-[3.6rem] rounded-full menu-item ${
             pathname === '/order' ? 'active' : 'unactive'
           }`}
@@ -45,28 +56,28 @@ export default function Footer() {
             <BsPhoneVibrate size="20" />
             <p>주문</p>
           </div>
-        </li>
+        </div>
       </Link>
       <Link href="/story">
-        <li
+        <div
           className={`menu-item ${
             pathname === '/story' ? 'active' : 'unactive'
           }`}
         >
           <BiNotepad size="20" />
           <p>스토리</p>
-        </li>
+        </div>
       </Link>
       <Link href="/menu">
-        <li
+        <div
           className={`menu-item ${
             pathname === '/menu' ? 'active' : 'unactive'
           }`}
         >
           <TbBorderAll size="20" />
           <p>전체</p>
-        </li>
+        </div>
       </Link>
-    </ul>
+    </div>
   );
 }
