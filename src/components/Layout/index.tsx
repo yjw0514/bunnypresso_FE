@@ -10,7 +10,7 @@ export default function PageLayout({
 }) {
   const { pathname } = useRouter();
   return (
-    <div>
+    <div className="px-3 pt-3">
       {pathname !== '/' && <Header />}
       {children}
       <Footer />
