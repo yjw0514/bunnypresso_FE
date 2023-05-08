@@ -1,7 +1,7 @@
 import BasicButton from '@/components/Button/BasicButton';
 import IconButton from '@/components/Button/IconButton';
 import BasicModal from '@/components/Modal/BasicModal';
-import useModal from '@/Util/hooks/useModal';
+import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
