@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, MouseEventHandler, useState } from 'react';
-import BasicButton from '../Button/BasicButton';
+import BasicButton from '@/components/Button/BasicButton';
 
 type ModalType = {
   isOpen: boolean;
