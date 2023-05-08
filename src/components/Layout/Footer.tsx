@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BsFillPersonFill } from 'react-icons/bs';
+import { BsFillPersonFill, BsPhoneFill } from 'react-icons/bs';
 import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
 import { BsPhoneVibrate } from 'react-icons/bs';
 import { BiNotepad } from 'react-icons/bi';
@@ -41,22 +41,33 @@ export default function Footer() {
           <p>멤버쉽</p>
         </div>
       </Link>
-      <Link href="/order" className="relative w-full">
+      <Link href="/order">
         {showTooltip && (
           <div className="absolute left-1/2 translate-x-[-50%] bottom-12">
             <Tooltip />
           </div>
         )}
+
         <div
-          className={`fixed bottom-2 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.6rem] h-[3.6rem] rounded-full menu-item ${
+          className={`menu-item  ${
             pathname === '/order' ? 'active' : 'unactive'
           }`}
         >
-          <div className="gap-1 flex-col-center">
-            <BsPhoneVibrate size="20" />
-            <p>주문</p>
-          </div>
+          <BsPhoneFill />
+          <p>주문</p>
         </div>
+        {pathname !== '/order' && (
+          <div
+            className={`fixed bottom-2 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.6rem] h-[3.6rem] rounded-full menu-item ${
+              pathname === '/order' ? 'active' : 'unactive'
+            }`}
+          >
+            <div className="gap-1 flex-col-center">
+              <BsPhoneVibrate size="20" />
+              <p>주문</p>
+            </div>
+          </div>
+        )}
       </Link>
       <Link href="/story">
         <div
