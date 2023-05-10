@@ -19,11 +19,12 @@ const menu = {
 
 export default function Detail() {
   const [count, setCount] = useState(1);
-
+  const { isOpen, modalHandler } = useModal();
+  const router = useRouter();
   const {
     query: { id },
   } = useRouter();
-  const { isOpen, modalHandler } = useModal();
+
   return (
     <>
       <ul>
@@ -83,6 +84,7 @@ export default function Detail() {
           title="주문 확인"
           isOpen={isOpen}
           modalHandler={modalHandler}
+          onConfirm={() => router.push('/story')}
         >
           <div>선택하신 상품을 주문하시겠습니까?</div>
         </BasicModal>
