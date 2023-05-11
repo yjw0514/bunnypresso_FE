@@ -10,8 +10,8 @@ export default function PageLayout({
 }) {
   const { pathname } = useRouter();
   return (
-    <div className="pt-3 ">
-      {pathname !== '/' && <Header />}
+    <div className="pt-3">
+      {pathname === '/order' && <Header />}
       {children}
       {pathname !== '/order/[id]' && <Footer />}
     </div>
