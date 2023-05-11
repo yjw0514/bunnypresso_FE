@@ -14,32 +14,36 @@ const menu = {
 
 export default function story() {
   return (
-    <div className="px-3 py-2">
-      <div className="flex-between">
+    <div className="bg-gray-50">
+      <div className="px-4 pt-4 pb-4 mb-2 bg-white border-b border-gray-200 flex-between ">
         <span className="font-bold">주문번호 1000</span>
         <span className="text-sm text-gray-400">2023.05.10 10:40</span>
       </div>
-      <div>
-        <ol className="flex items-center w-full">
-          <li className="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
-            <span className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
+      {/* 진행상황 */}
+      <div className="px-4 py-4 mb-4 bg-white border-gray-200 border-y">
+        <ol className="flex items-center w-full px-2 mb-2">
+          <li className="flex w-full items-center font-bold text-primary after:content-[''] after:w-full after:h-1 after:border-b after:border-primary after:border-4 after:inline-block">
+            <span className="flex items-center justify-center w-10 h-10 bg-white border-4 rounded-full border-primary lg:h-12 lg:w-12 shrink-0">
               1
             </span>
           </li>
-          <p>주문요청</p>
-          <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
-            <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+
+          <li className="flex w-full items-center text-gray-400 after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block ">
+            <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
               2
             </span>
           </li>
-          <p>주문확인</p>
 
-          <li className="flex items-center w-full">
-            <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+          <li className="flex items-center text-gray-400">
+            <span className="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 shrink-0">
               3
             </span>
           </li>
-          <p>픽업대기</p>
+        </ol>
+        <ol className="text-sm text-gray-600 flex-between">
+          <li className="font-bold text-primary">주문요청</li>
+          <li>주문확인</li>
+          <li>픽업대기</li>
         </ol>
       </div>
       <div>
