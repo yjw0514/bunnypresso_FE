@@ -7,8 +7,9 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const { isOpen, modalHandler } = useModal();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isOpen: openLogin, modalHandler: loginModalHandler } = useModal();
+  const { isOpen: openLogout, modalHandler: logoutModalHandler } = useModal();
 
   return (
     <div className="container h-screen">
@@ -28,11 +29,11 @@ export default function Home() {
       <div></div>
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
-          <IconButton onClick={modalHandler}>
+          <IconButton onClick={logoutModalHandler}>
             <FiLogOut size="20px" />
           </IconButton>
         ) : (
-          <BasicButton name="LogIn" />
+          <BasicButton name="LogIn" onClick={loginModalHandler} />
         )}
       </div>
 
@@ -41,8 +42,50 @@ export default function Home() {
         BananaPresso
       </div>
 
-      {isOpen && (
-        <BasicModal isOpen={isOpen} modalHandler={modalHandler}>
+      {openLogin && (
+        <BasicModal
+          isOpen={openLogin}
+          modalHandler={loginModalHandler}
+          btnName="로그인"
+          title="Login"
+        >
+          <form>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className="block mb-2 text-sm font-medium text-gray-900 "
+              >
+                NickName
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none focus:ring-primary focus:border-primary block w-full p-2.5"
+                placeholder="john.doe@company.com"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900 "
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none focus:ring-primary focus:border-primary block w-full p-2.5 "
+                placeholder="•••••••••"
+                required
+                autoComplete="on"
+              />
+            </div>
+          </form>
+        </BasicModal>
+      )}
+      {openLogout && (
+        <BasicModal isOpen={openLogout} modalHandler={logoutModalHandler}>
           {isLoggedIn ? <div>로그아웃하시겠습니까?</div> : <div>로그인 폼</div>}
         </BasicModal>
       )}
