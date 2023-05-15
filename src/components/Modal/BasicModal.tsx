@@ -8,6 +8,7 @@ type ModalType = {
   children: React.ReactNode;
   title?: string;
   onConfirm?: MouseEventHandler<HTMLButtonElement>;
+  btnName?: string;
 };
 
 export default function BasicModal({
@@ -16,6 +17,7 @@ export default function BasicModal({
   children,
   title = '모달',
   onConfirm,
+  btnName = '확인',
 }: ModalType) {
   return (
     <>
@@ -47,14 +49,18 @@ export default function BasicModal({
                 <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="mb-6 text-lg font-medium leading-6 text-gray-900"
                   >
                     {title}
                   </Dialog.Title>
                   <div className="mt-2">{children}</div>
 
                   <div className="flex items-center justify-end gap-2 mt-4">
-                    <BasicButton utilType="fill" onClick={onConfirm} />
+                    <BasicButton
+                      name={btnName}
+                      utilType="fill"
+                      onClick={onConfirm}
+                    />
                     <BasicButton name="닫기" onClick={modalHandler} />
                   </div>
                 </Dialog.Panel>
