@@ -3,14 +3,39 @@ import IconButton from '@/components/Button/IconButton';
 import BasicModal from '@/components/Modal/BasicModal';
 import useModal from '@/hooks/useModal';
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
+import { LoginValue } from '@/dto/loginDto';
+import { loginSchema } from '@/utils/schema';
+import BasicInput from '@/components/Input/BasicInput';
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSignUp, setIsSingUp] = useState(false);
+
   const { isOpen: openLogin, modalHandler: loginModalHandler } = useModal();
   const { isOpen: openLogout, modalHandler: logoutModalHandler } = useModal();
 
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LoginValue>({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const submitHandler: SubmitHandler<LoginValue> = (data) => {
+    console.log(data);
+  };
+
+  const onCloseModal = () => {
+    setIsSingUp(false);
+    loginModalHandler();
+  };
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -37,17 +62,22 @@ export default function Home() {
         )}
       </div>
 
-      <div className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[8rem] font-bold text-transparent text-center ">
-        Welcome to <br />
-        BananaPresso
+      <div>
+        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[8rem] font-bold text-transparent text-center ">
+          Welcome to <br />
+          BunnyPresso
+          <br />
+        </p>
+        <span className="flex justify-center mt-6 text-3xl">🐰☕️</span>
       </div>
 
       {openLogin && (
         <BasicModal
           isOpen={openLogin}
-          modalHandler={loginModalHandler}
-          btnName="로그인"
-          title="Login"
+          modalHandler={onCloseModal}
+          btnName={isSignUp ? '회원가입' : '로그인'}
+          title={isSignUp ? 'Welcome 🐰' : 'Enjoy your coffee ☕️'}
+          onConfirm={handleSubmit(submitHandler)}
         >
           <form>
             <div className="mb-6">
@@ -55,14 +85,15 @@ export default function Home() {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                NickName
+                Name
               </label>
-              <input
-                type="email"
-                id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none focus:ring-primary focus:border-primary block w-full p-2.5"
-                placeholder="john.doe@company.com"
-                required
+
+              <BasicInput
+                register={register('name')}
+                type="text"
+                placeholder="성함 또는 닉네임을 입력하세요."
+                isError={!!errors.name}
+                errorMsg={errors.name?.message}
               />
             </div>
             <div className="mb-6">
@@ -70,17 +101,36 @@ export default function Home() {
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Password
+                Password &nbsp;
+                <span className="text-xs text-gray-500">
+                  숫자와 문자를 조합한 6~10자리
+                </span>
               </label>
-              <input
+
+              <BasicInput
+                register={register('password')}
                 type="password"
-                id="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg outline-none focus:ring-primary focus:border-primary block w-full p-2.5 "
                 placeholder="•••••••••"
-                required
+                isError={!!errors.password}
+                errorMsg={errors.password?.message}
                 autoComplete="on"
               />
             </div>
+            {isSignUp ? (
+              <p
+                onClick={() => setIsSingUp(false)}
+                className="text-sm text-right text-gray-500 underline underline-offset-4"
+              >
+                로그인
+              </p>
+            ) : (
+              <p
+                onClick={() => setIsSingUp(true)}
+                className="text-sm text-right text-gray-500 underline underline-offset-4"
+              >
+                회원가입
+              </p>
+            )}
           </form>
         </BasicModal>
       )}

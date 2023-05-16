@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, MouseEventHandler, useState } from 'react';
 import BasicButton from '@/components/Button/BasicButton';
+import { SubmitHandler } from 'react-hook-form';
 
 type ModalType = {
   isOpen: boolean;
@@ -49,7 +50,7 @@ export default function BasicModal({
                 <Dialog.Panel className="w-full max-w-md p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
-                    className="mb-6 text-lg font-medium leading-6 text-gray-900"
+                    className="mb-6 text-lg font-semibold leading-6 text-center text-primary"
                   >
                     {title}
                   </Dialog.Title>
