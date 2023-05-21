@@ -1,16 +1,19 @@
+import { useEffect, useState } from 'react';
 import BasicButton from '@/components/Button/BasicButton';
 import IconButton from '@/components/Button/IconButton';
 import BasicModal from '@/components/Modal/BasicModal';
+import BasicInput from '@/components/Input/BasicInput';
+
 import useModal from '@/hooks/useModal';
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
 import { LoginValue } from '@/dto/loginDto';
 import { loginSchema } from '@/utils/schema';
-import BasicInput from '@/components/Input/BasicInput';
+import { login, signUp } from '@/lib/api/auth/index';
+import { useMutation } from 'react-query';
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,19 +26,77 @@ export default function Home() {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
+    reset,
+    formState,
+    formState: { errors, isSubmitSuccessful },
   } = useForm<LoginValue>({
     resolver: yupResolver(loginSchema),
   });
 
+  // 회원가입 api
+  const {
+    mutate: signUpMutate,
+    isLoading: signUpLoading,
+    isSuccess: signUpSuccess,
+  } = useMutation(signUp, {
+    onMutate() {
+      console.log('onMutate -> ');
+    },
+    onSuccess: (data, variables, context) => {
+      setIsSingUp((prev) => !prev);
+      localStorage.setItem('name', variables.name);
+      // loginModalHandler();
+    },
+    onError: (error, variable, context) => {
+      console.log('onError -> ', error, variable);
+    },
+  });
+
+  // 로그인 api
+  const { mutate: loginMutate, isLoading: loginLoading } = useMutation(login, {
+    onMutate() {
+      console.log('onMutate -> ');
+    },
+    onSuccess: (data, variables, context) => {
+      console.log(data);
+      setIsLoggedIn(true);
+      localStorage.setItem('name', variables.name);
+      // loginModalHandler();
+    },
+    // TODO: error 타입 해결
+    onError: (error: any, variable, context) => {
+      const { type, message } = error.response.data;
+      console.log(type, message);
+      setError(type, {
+        type,
+        message,
+      });
+    },
+  });
+
+  // submit handler
   const submitHandler: SubmitHandler<LoginValue> = (data) => {
-    console.log(data);
+    const { name, password } = data;
+    if (isSignUp) {
+      signUpMutate({ name, password });
+      return;
+    }
+    loginMutate({ name, password });
   };
 
+  // 로그인/회원가입 모달 닫기
   const onCloseModal = () => {
     setIsSingUp(false);
     loginModalHandler();
   };
+
+  // 회원가입 후 인풋 초기화
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [reset, formState]);
+
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -80,6 +141,12 @@ export default function Home() {
           onConfirm={handleSubmit(submitHandler)}
         >
           <form>
+            {signUpSuccess && (
+              <div className="mb-4 text-center text-md text-primary">
+                회원가입이 완료되었습니다.
+                <br /> 로그인을 해주세요.
+              </div>
+            )}
             <div className="mb-6">
               <label
                 htmlFor="email"
