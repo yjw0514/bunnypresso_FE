@@ -12,15 +12,35 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
 import { LoginValue } from '@/dto/loginDto';
 import { loginSchema } from '@/utils/schema';
-import { login, signUp } from '@/lib/api/auth/index';
+import { signIn, signUp } from '@/lib/api/auth/index';
 import { useMutation } from 'react-query';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSignUp, setIsSingUp] = useState(false);
 
-  const { isOpen: openLogin, modalHandler: loginModalHandler } = useModal();
-  const { isOpen: openLogout, modalHandler: logoutModalHandler } = useModal();
+  const {
+    isOpen: isOpenLogin,
+    closeModal: closeLogin,
+    openModal: openLogin,
+  } = useModal();
+  const {
+    isOpen: isOpenLogout,
+    closeModal: closeLogout,
+    openModal: openLogout,
+  } = useModal();
+
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.type === 'login') {
+      console.log(router.pathname, router.query.type);
+      openLogin();
+    }
+    return () => {
+      router.replace(`/`, undefined, { shallow: true });
+    };
+  }, []);
 
   const {
     register,
@@ -45,7 +65,6 @@ export default function Home() {
     onSuccess: (data, variables, context) => {
       setIsSingUp((prev) => !prev);
       localStorage.setItem('name', variables.name);
-      // loginModalHandler();
     },
     onError: (error, variable, context) => {
       console.log('onError -> ', error, variable);
@@ -53,7 +72,7 @@ export default function Home() {
   });
 
   // 로그인 api
-  const { mutate: loginMutate, isLoading: loginLoading } = useMutation(login, {
+  const { mutate: loginMutate, isLoading: loginLoading } = useMutation(signIn, {
     onMutate() {
       console.log('onMutate -> ');
     },
@@ -61,7 +80,7 @@ export default function Home() {
       console.log(data);
       setIsLoggedIn(true);
       localStorage.setItem('name', variables.name);
-      // loginModalHandler();
+      closeLogin();
     },
     // TODO: error 타입 해결
     onError: (error: any, variable, context) => {
@@ -85,9 +104,14 @@ export default function Home() {
   };
 
   // 로그인/회원가입 모달 닫기
-  const onCloseModal = () => {
+  const closeModal = () => {
     setIsSingUp(false);
-    loginModalHandler();
+    console.log(isOpenLogin);
+    if (isOpenLogin) {
+      closeLogin();
+      return;
+    }
+    openLogin();
   };
 
   // 회원가입 후 인풋 초기화
@@ -115,11 +139,11 @@ export default function Home() {
       <div></div>
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
-          <IconButton onClick={logoutModalHandler}>
+          <IconButton onClick={openLogout}>
             <FiLogOut size="20px" />
           </IconButton>
         ) : (
-          <BasicButton name="LogIn" onClick={loginModalHandler} />
+          <BasicButton name="LogIn" onClick={openLogin} />
         )}
       </div>
 
@@ -132,10 +156,10 @@ export default function Home() {
         <span className="flex justify-center mt-6 text-3xl">🐰☕️</span>
       </div>
 
-      {openLogin && (
+      {isOpenLogin && (
         <BasicModal
-          isOpen={openLogin}
-          modalHandler={onCloseModal}
+          isOpen={isOpenLogin}
+          closeModal={closeModal}
           btnName={isSignUp ? '회원가입' : '로그인'}
           title={isSignUp ? 'Welcome 🐰' : 'Enjoy your coffee ☕️'}
           onConfirm={handleSubmit(submitHandler)}
@@ -201,8 +225,8 @@ export default function Home() {
           </form>
         </BasicModal>
       )}
-      {openLogout && (
-        <BasicModal isOpen={openLogout} modalHandler={logoutModalHandler}>
+      {isOpenLogout && (
+        <BasicModal isOpen={isOpenLogout} closeModal={closeLogout}>
           {isLoggedIn ? <div>로그아웃하시겠습니까?</div> : <div>로그인 폼</div>}
         </BasicModal>
       )}

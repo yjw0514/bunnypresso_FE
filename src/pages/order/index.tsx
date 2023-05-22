@@ -1,4 +1,6 @@
 import MenuItem from '@/components/Order/MenuItem';
+import withAuth from '@/utils/withAuth';
+import { NextPage } from 'next';
 import React, { useState } from 'react';
 const menuCategory = [
   'COFFEE',
@@ -9,7 +11,7 @@ const menuCategory = [
   'BREAD',
 ];
 
-export default function order() {
+const order: NextPage = () => {
   const [tap, setTap] = useState(0);
 
   return (
@@ -41,4 +43,6 @@ export default function order() {
       </ul>
     </div>
   );
-}
+};
+
+export default withAuth(order);
