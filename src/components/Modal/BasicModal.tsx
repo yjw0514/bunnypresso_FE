@@ -5,7 +5,7 @@ import { SubmitHandler } from 'react-hook-form';
 
 type ModalType = {
   isOpen: boolean;
-  modalHandler: () => void;
+  closeModal: () => void;
   children: React.ReactNode;
   title?: string;
   onConfirm?: MouseEventHandler<HTMLButtonElement>;
@@ -14,7 +14,7 @@ type ModalType = {
 
 export default function BasicModal({
   isOpen = false,
-  modalHandler,
+  closeModal,
   children,
   title = '모달',
   onConfirm,
@@ -23,7 +23,7 @@ export default function BasicModal({
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={modalHandler}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -62,7 +62,7 @@ export default function BasicModal({
                       utilType="fill"
                       onClick={onConfirm}
                     />
-                    <BasicButton name="닫기" onClick={modalHandler} />
+                    <BasicButton name="닫기" onClick={closeModal} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
