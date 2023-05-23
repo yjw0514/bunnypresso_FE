@@ -15,10 +15,14 @@ import { loginSchema } from '@/utils/schema';
 import { signIn, signUp } from '@/lib/api/auth/index';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import withAuth from '@/utils/withAuth';
+import { login, logout } from '@/store/slice/authSlice';
 
-export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useAppDispatch();
 
   const {
     isOpen: isOpenLogin,
@@ -36,10 +40,8 @@ export default function Home() {
     if (router.query.type === 'login') {
       console.log(router.pathname, router.query.type);
       openLogin();
-    }
-    return () => {
       router.replace(`/`, undefined, { shallow: true });
-    };
+    }
   }, []);
 
   const {
@@ -78,7 +80,7 @@ export default function Home() {
     },
     onSuccess: (data, variables, context) => {
       console.log(data);
-      setIsLoggedIn(true);
+      dispatch(login());
       localStorage.setItem('name', variables.name);
       closeLogin();
     },
@@ -121,6 +123,11 @@ export default function Home() {
     }
   }, [reset, formState]);
 
+  // 로그아웃
+  const onLogout = () => {
+    dispatch(logout());
+    closeLogout();
+  };
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -226,10 +233,17 @@ export default function Home() {
         </BasicModal>
       )}
       {isOpenLogout && (
-        <BasicModal isOpen={isOpenLogout} closeModal={closeLogout}>
-          {isLoggedIn ? <div>로그아웃하시겠습니까?</div> : <div>로그인 폼</div>}
+        <BasicModal
+          isOpen={isOpenLogout}
+          closeModal={closeLogout}
+          onConfirm={onLogout}
+          title="로그아웃"
+        >
+          <div>로그아웃하시겠습니까?</div>
         </BasicModal>
       )}
     </div>
   );
-}
+};
+
+export default withAuth(Home);
