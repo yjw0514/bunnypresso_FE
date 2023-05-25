@@ -155,12 +155,17 @@ const Home = () => {
       </div>
 
       <div>
-        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[8rem] font-bold text-transparent text-center ">
+        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[6rem] font-bold text-transparent text-center ">
           Welcome to <br />
           BunnyPresso
           <br />
         </p>
-        <span className="flex justify-center mt-6 text-3xl">🐰☕️</span>
+        {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
+        <img
+          className="w-3/4 mx-auto mt-8"
+          src="https://www.banapresso.com/mo/static/media/greeting.b4aa8c76d4594b10386c.gif"
+          alt="banapresso"
+        />
       </div>
 
       {isOpenLogin && (

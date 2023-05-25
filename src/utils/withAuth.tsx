@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
 
 const withAuth = (Component: NextPage | React.FC) => {
-  const Auth = () => {
+  const Auth = ({ ...props }) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     let isAuth = false;
@@ -23,7 +23,7 @@ const withAuth = (Component: NextPage | React.FC) => {
     }, [router]);
 
     dispatch(login());
-    return <Component />;
+    return <Component {...props} />;
   };
 
   return Auth;
