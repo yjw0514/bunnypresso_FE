@@ -1,15 +1,13 @@
 import MenuItem from '@/components/Order/MenuItem';
-import { instance } from '@/lib/api';
-import { getMenu } from '@/lib/api/menu';
 import withAuth from '@/utils/withAuth';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 const CATEGORY = [
   'COFFEE',
-  'DECAFFEINE COFFEE',
-  'MILK & LATTE',
+  'BANACCINO & SMOOTHIE',
   'JUICE & DRINK',
   'TEA & ADE',
+  'DESSERT',
 ];
 
 const order: NextPage = ({
@@ -38,16 +36,12 @@ const order: NextPage = ({
                 onClick={() => setTap(idx)}
               >
                 <p>{menu}</p>
-                {/* {idx === tap && (
-                  <div className="transition-all ease-in-out absolute z-20 w-full h-[2px] bg-black top-[26px] rounded-md"></div>
-                )} */}
               </li>
             );
           })}
         </ul>
       </div>
-
-      <ul className="pb-4">
+      <ul className="pb-20">
         <MenuItem menu={menuList} />
       </ul>
     </div>

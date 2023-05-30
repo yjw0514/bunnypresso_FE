@@ -152,7 +152,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
           <IconButton onClick={openLogout}>
@@ -164,7 +163,7 @@ const Home = () => {
       </div>
 
       <div>
-        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[6rem] font-bold text-transparent text-center ">
+        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[4rem] font-bold text-transparent text-center ">
           Welcome to <br />
           BunnyPresso
           <br />

@@ -29,7 +29,7 @@ export default function Detail() {
     <>
       <ul>
         {id && (
-          <li className="flex flex-col items-center mx-5 space-y-2">
+          <li className="flex flex-col items-center mx-5 mt-4 space-y-2">
             {/* <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative"> */}
             <Image src={menu.img} alt="coffee" width="200" height="200" />
             {/* </div> */}
