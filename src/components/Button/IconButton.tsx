@@ -7,7 +7,7 @@ interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-export default function BasicButton({
+export default function IconButton({
   children,
   onClick,
   className,

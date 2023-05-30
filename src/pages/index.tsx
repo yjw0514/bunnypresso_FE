@@ -22,6 +22,8 @@ import { login, logout } from '@/store/slice/authSlice';
 const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const [name, setName] = useState<string | null>(null);
+
   const dispatch = useAppDispatch();
 
   const {
@@ -128,6 +130,13 @@ const Home = () => {
     dispatch(logout());
     closeLogout();
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const user = localStorage.getItem('name');
+      setName(user);
+    }
+  }, []);
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -137,13 +146,12 @@ const Home = () => {
           </div>
           <div className="font-semibold text-black text-md">
             <div>
-              0000님, <br />
+              {name}님, <br />
               안녕하세요!
             </div>
           </div>
         </div>
       )}
-      <div></div>
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
           <IconButton onClick={openLogout}>
@@ -155,7 +163,7 @@ const Home = () => {
       </div>
 
       <div>
-        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[6rem] font-bold text-transparent text-center ">
+        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[4rem] font-bold text-transparent text-center ">
           Welcome to <br />
           BunnyPresso
           <br />
