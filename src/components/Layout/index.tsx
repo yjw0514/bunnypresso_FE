@@ -9,9 +9,10 @@ export default function PageLayout({
   children: React.ReactNode;
 }) {
   const { pathname } = useRouter();
+  const hasHeaderRoute = ['/order', '/order/[id]'];
   return (
     <div>
-      {pathname === '/order' && <Header />}
+      {hasHeaderRoute.includes(pathname) && <Header />}
       {children}
       {pathname !== '/order/[id]' && <Footer />}
     </div>
