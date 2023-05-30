@@ -3,8 +3,6 @@ import { addComma } from '@/utils/addComma';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import BasicButton from '@/components/Button/BasicButton';
-import FullModal from '@/components/Modal/FullModal';
 
 type ItemPropsType = {
   menu: menuType[];
