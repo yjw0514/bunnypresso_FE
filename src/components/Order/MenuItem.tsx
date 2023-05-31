@@ -1,29 +1,17 @@
-import useModal from '@/hooks/useModal';
-import { addComma } from '@/utils/addComma';
+import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { menuType } from '@/dto/menuDto';
+import { addComma } from '@/utils/addComma';
 
 type ItemPropsType = {
   menu: menuType[];
 };
-type menuType = {
-  _id: string;
-  img_url: string;
-  name: string;
-  en_name: string;
-  price: number;
-  takeout: number;
-  desc: string;
-  category: string;
-};
 
 export default function MenuItem({ menu }: ItemPropsType) {
   const router = useRouter();
-  const [menuId, setMenuId] = useState<null | string>(null);
   const onClickMenu = (id: string) => {
-    setMenuId(id);
-    router.push(`/order/${menuId}`);
+    router.push(`/order/${id}`);
   };
 
   return (
@@ -41,7 +29,9 @@ export default function MenuItem({ menu }: ItemPropsType) {
                 src={img_url}
                 style={{ objectFit: 'contain' }}
                 fill
+                sizes="100%"
                 alt="coffee"
+                priority
               />
             </div>
             <div className="flex flex-col space-y-1">
