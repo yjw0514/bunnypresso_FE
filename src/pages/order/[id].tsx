@@ -1,42 +1,66 @@
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 
 import BasicButton from '@/components/Button/BasicButton';
 import BasicModal from '@/components/Modal/BasicModal';
 import useModal from '@/hooks/useModal';
 import { addComma } from '@/utils/addComma';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-
-const menu = {
-  img: '/image/menu/coffee.png',
-  name: '아메리카노',
-  engName: 'Americano',
-  price: 2500,
-  takeout: 1800,
-  desc: '[진한 고소함] 견과류 풍미와 초콜릿처럼 달콤 쌉싸름한 맛이 밸런스 있게 어우러진 균형잡힌 바디감의 커피',
-};
+import { getMenuDetail } from '@/lib/api/menu';
+import Loading from '@/components/Loading';
+import { menuType } from '@/dto/menuDto';
 
 export default function Detail() {
   const [count, setCount] = useState(1);
+  const [menu, setMenu] = useState<menuType>();
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
-  const {
-    query: { id },
-  } = useRouter();
 
+  const { id } = router.query;
+
+  // 메뉴 상세정보 api
+  const { isLoading, isError, data, error, isSuccess } = useQuery(
+    'menuId',
+    () => getMenuDetail(id as string),
+    {
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        const { detail } = data.data;
+        setMenu(detail);
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    console.log(error);
+  }
   return (
     <>
       <ul>
-        {id && (
-          <li className="flex flex-col items-center mx-5 mt-4 space-y-2">
+        {menu && (
+          <li className="flex flex-col items-center mx-5 space-y-2">
             {/* <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative"> */}
-            <Image src={menu.img} alt="coffee" width="200" height="200" />
+            <Image
+              src={menu?.img_url}
+              alt="coffee"
+              priority
+              width="200"
+              height="200"
+            />
             {/* </div> */}
             <div className="flex flex-col items-center pb-5 border-b border-b-gray-200">
               <h2 className="text-xl font-semibold">{menu.name}</h2>
               <p className="mt-1 text-sm font-light text-gray-400">
-                {menu.engName}
+                {menu.en_name}
               </p>
               <p className="mt-3 text-sm font-normal text-center text-gray-500 ">
                 {menu.desc}
