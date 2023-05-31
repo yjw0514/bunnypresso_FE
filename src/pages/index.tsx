@@ -7,16 +7,14 @@ import BasicInput from '@/components/Input/BasicInput';
 import useModal from '@/hooks/useModal';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
 import { LoginValue } from '@/dto/loginDto';
 import { loginSchema } from '@/utils/schema';
-import { signIn, signUp } from '@/lib/api/auth/index';
+import { signIn, signUp } from '@/lib/api/auth';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import withAuth from '@/utils/withAuth';
 import { login, logout } from '@/store/slice/authSlice';
 
 const Home = () => {

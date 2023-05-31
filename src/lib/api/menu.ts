@@ -1,8 +1,8 @@
 import { instance } from '@/lib/api/index';
 
-export const getMenu = () => {
-  return instance.get('/menu');
+export const getMenuDetail = (id: string) => {
+  return instance.get(`/menu/${id}`);
 };
 
-const MenuApi = { getMenu };
+const MenuApi = { getMenuDetail };
 export default MenuApi;
