@@ -15,6 +15,7 @@ import { menuType } from '@/dto/menuDto';
 export default function Detail() {
   const [count, setCount] = useState(1);
   const [menu, setMenu] = useState<menuType>();
+  const [isHot, setIsHot] = useState(true);
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
 
@@ -29,7 +30,6 @@ export default function Detail() {
       onSuccess: (data) => {
         const { detail } = data.data;
         setMenu(detail);
-        console.log(data);
       },
       onError: (error) => {
         console.log(error);
@@ -40,15 +40,31 @@ export default function Detail() {
   if (isLoading) {
     return <Loading />;
   }
-  if (isError) {
-    console.log(error);
-  }
+  const countHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const isMinus = e.currentTarget.dataset['id'] === 'minus';
+    if (isMinus) {
+      setCount((prev) => prev - 1);
+      return;
+    }
+
+    setCount((prev) => prev + 1);
+  };
+
+  const temperatureHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const isHot = e.currentTarget.dataset['id'] === 'hot';
+    setIsHot(isHot);
+  };
+
+  const orderHandler = () => {
+    const params = { id: menu?._id, name: menu?.name, isHot, count };
+    console.log(params);
+    // router.push('/story');
+  };
   return (
     <>
-      <ul>
+      <div className="mt-[30px]" style={{ height: 'calc(100vh - 52px)' }}>
         {menu && (
-          <li className="flex flex-col items-center mx-5 space-y-2">
-            {/* <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative"> */}
+          <div className="flex flex-col items-center justify-center h-full mx-5 space-y-6">
             <Image
               src={menu?.img_url}
               alt="coffee"
@@ -56,7 +72,6 @@ export default function Detail() {
               width="200"
               height="200"
             />
-            {/* </div> */}
             <div className="flex flex-col items-center pb-5 border-b border-b-gray-200">
               <h2 className="text-xl font-semibold">{menu.name}</h2>
               <p className="mt-1 text-sm font-light text-gray-400">
@@ -74,45 +89,77 @@ export default function Detail() {
               <div className="mt-2 flex-between">
                 <p>수량</p>
                 <div className="flex items-center space-x-2">
-                  <AiOutlineMinus
-                    size={10}
-                    className="w-5 h-5 px-1 font-bold text-gray-400 border border-gray-400 rounded-full"
-                  />
+                  <button
+                    disabled={count === 1}
+                    onClick={countHandler}
+                    data-id="minus"
+                    className=" count-btn"
+                  >
+                    <AiOutlineMinus size={10} strokeWidth="10" />
+                  </button>
                   <p>{count}</p>
-                  <AiOutlinePlus
-                    size={10}
-                    className="w-5 h-5 px-1 text-gray-400 border border-gray-400 rounded-full"
-                  />
+                  <button
+                    onClick={countHandler}
+                    data-id="plus"
+                    className="w-5 h-5 px-1 text-gray-400 border border-gray-400 rounded-full count-btn"
+                    disabled={count === 10}
+                  >
+                    <AiOutlinePlus size={10} strokeWidth="10" />
+                  </button>
                 </div>
               </div>
               <div className="flex justify-center mt-4 space-x-2">
-                <button className="text-gray-400 bg-gray-100 border border-gray-400 w-14 rounded-xl">
+                <button
+                  onClick={temperatureHandler}
+                  data-id="hot"
+                  className={`temp-btn ${isHot ? 'temp-active' : ''}`}
+                >
                   Hot
                 </button>
-                <button className="text-gray-400 bg-gray-100 border border-gray-400 w-14 rounded-xl">
+                <button
+                  onClick={temperatureHandler}
+                  data-id="ice"
+                  className={`temp-btn ${isHot ? '' : 'temp-active'}`}
+                >
                   Ice
                 </button>
               </div>
             </div>
             <BasicButton
               utilType="fill"
-              className="!px-3 !py-2 !mt-6 !rounded-3xl"
+              className="!px-3 !py-2 !mt-10 !rounded-3xl"
               name="바로 주문하기"
               onClick={openModal}
             />
-          </li>
+          </div>
         )}
-      </ul>
+      </div>
       {isOpen && (
         <BasicModal
           title="주문 확인"
           isOpen={isOpen}
           closeModal={closeModal}
-          onConfirm={() => router.push('/story')}
+          onConfirm={orderHandler}
         >
-          <div>선택하신 상품을 주문하시겠습니까?</div>
+          <div className="text-center">
+            <p className="font-bold text-md text-primary">
+              {menu?.name}&nbsp;
+              {count}잔({isHot ? 'Hot' : 'Ice'})
+            </p>
+            <p className="mt-1">선택하신 음료를 주문하시겠습니까?</p>
+          </div>
         </BasicModal>
       )}
     </>
   );
+}
+
+export async function getServerSideProps({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  return {
+    props: {},
+  };
 }

@@ -1,0 +1,14 @@
+.count-btn {
+  @apply w-5 h-5 px-1 text-gray-400 border border-gray-400 rounded-full;
+}
+.count-btn:disabled {
+  @apply bg-gray-100 text-gray-300  border-gray-300;
+}
+
+.temp-btn {
+  @apply text-gray-400 bg-gray-100 border border-gray-400 w-14 rounded-xl;
+}
+
+.temp-active {
+  @apply bg-primary text-white border-primary;
+}
