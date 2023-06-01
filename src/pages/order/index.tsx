@@ -20,30 +20,37 @@ const order: NextPage = ({
     setMenuList(list);
   }, [tap]);
   return (
-    <div>
-      {/* 메뉴 카테고리 */}
-      <div className="w-full px-3 mt-3 overflow-x-scroll text-xs text-gray-400 border-b border-gray-200 scrollbar-hide">
-        <ul className="flex items-center space-x-6 w-max">
-          {CATEGORY.map((menu, idx) => {
-            return (
-              <li
-                key={menu}
-                className={`${
-                  idx === tap
-                    ? 'text-black font-bold text-xs !border-black'
-                    : ''
-                } relative transition-all duration-300 pb-3 border-b-2 border-transparent`}
-                onClick={() => setTap(idx)}
-              >
-                <p>{menu}</p>
-              </li>
-            );
-          })}
-        </ul>
+    <div className="h-screen pt-[52px] overflow-hidden">
+      <div>
+        {/* 메뉴 카테고리 */}
+        <div className="w-full px-3 mt-3 overflow-x-scroll text-xs text-gray-400 border-b border-gray-200 scrollbar-hide">
+          <ul className="flex items-center space-x-6 w-max">
+            {CATEGORY.map((menu, idx) => {
+              return (
+                <li
+                  key={menu}
+                  className={`${
+                    idx === tap
+                      ? 'text-black font-bold text-xs !border-black'
+                      : ''
+                  } relative transition-all duration-300 pb-3 border-b-2 border-transparent`}
+                  onClick={() => setTap(idx)}
+                >
+                  <p>{menu}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div
+          style={{ height: 'calc(100vh - 150px)' }}
+          className="pb-10 overflow-y-scroll scrollbar-hide"
+        >
+          <ul>
+            <MenuItem menu={menuList} />
+          </ul>
+        </div>
       </div>
-      <ul className="pb-20">
-        <MenuItem menu={menuList} />
-      </ul>
     </div>
   );
 };
