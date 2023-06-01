@@ -8,7 +8,7 @@ export default function Header() {
   const { pathname } = router;
 
   return (
-    <div className="w-full px-3 pt-3 pb-4 flex-between">
+    <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
       {pathname === '/order/[id]' ? (
         <>
           <div className="flex items-center space-x-3">
