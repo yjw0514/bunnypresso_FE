@@ -66,7 +66,7 @@ const Home = () => {
     },
     onSuccess: (data, variables, context) => {
       setIsSingUp((prev) => !prev);
-      localStorage.setItem('name', variables.name);
+      // localStorage.setItem('name', variables.name);
     },
     onError: (error, variable, context) => {
       console.log('onError -> ', error, variable);
@@ -82,6 +82,7 @@ const Home = () => {
       console.log(data);
       dispatch(login());
       localStorage.setItem('name', variables.name);
+      localStorage.setItem('userId', data.data.userId);
       closeLogin();
     },
     // TODO: error 타입 해결
