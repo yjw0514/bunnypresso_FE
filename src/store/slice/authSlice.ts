@@ -1,4 +1,4 @@
-import { removeCookie } from './../../utils/cookies';
+import { removeCookie } from '@/utils/cookies';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface authState {
