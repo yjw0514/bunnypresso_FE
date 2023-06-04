@@ -135,7 +135,7 @@ const Home = () => {
       const user = localStorage.getItem('name');
       setName(user);
     }
-  }, []);
+  }, [localStorage.getItem('name')]);
   return (
     <div className="container h-screen">
       {isLoggedIn && (
