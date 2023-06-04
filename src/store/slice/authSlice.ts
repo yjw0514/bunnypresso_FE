@@ -1,4 +1,4 @@
-import { removeCookie } from './../../utils/cookies';
+import { removeCookie } from '@/utils/cookies';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface authState {
@@ -19,6 +19,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('name');
+      localStorage.removeItem('userId');
       removeCookie('accessToken');
       removeCookie('refreshToken');
     },

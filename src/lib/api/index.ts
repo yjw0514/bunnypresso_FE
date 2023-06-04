@@ -1,5 +1,8 @@
-import { getCookie } from '@/utils/cookies';
+import { useAppDispatch } from '@/store/hooks';
+import { logout } from '@/store/slice/authSlice';
+import { getCookie, setCookie } from '@/utils/cookies';
 import axios from 'axios';
+import { refreshChk } from '@/lib/api/auth';
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AUTH_API_URL,
@@ -23,8 +26,6 @@ instance.interceptors.request.use(
     return req;
   },
   function (error) {
-    // TODO:엑세스 토큰 만료 시 리프레시 토큰 보내기
-
     // 요청 오류가 있는 작업 수행
     return Promise.reject(error);
   }
@@ -37,7 +38,28 @@ instance.interceptors.response.use(
     // 응답 데이터가 있는 작업 수행
     return response;
   },
-  function (error) {
+  async function (error) {
+    const errorConfig = error.config;
+    if (error.response.status === 401) {
+      if (error.response.data.message === 'token expired') {
+        // 권한없음. 엑세스 토큰 만료
+        const refreshToken = getCookie('refreshToken');
+        try {
+          const res = await refreshChk(refreshToken);
+          const { accessToken } = res.data;
+          setCookie('accessToken', accessToken);
+          errorConfig.headers.Authorization = `Bearer ${accessToken}`;
+          axios(errorConfig);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        const dispatch = useAppDispatch();
+        dispatch(logout());
+      }
+    }
+
+    console.log('err', error);
     // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
     // 응답 오류가 있는 작업 수행
     return Promise.reject(error);

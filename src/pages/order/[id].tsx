@@ -8,7 +8,7 @@ import BasicModal from '@/components/Modal/BasicModal';
 import useModal from '@/hooks/useModal';
 import { addComma } from '@/utils/addComma';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { getMenuDetail } from '@/lib/api/menu';
+import { getMenuDetail, takeOrder } from '@/lib/api/menu';
 import Loading from '@/components/Loading';
 import { menuType } from '@/dto/menuDto';
 
@@ -55,10 +55,14 @@ export default function Detail() {
     setIsHot(isHot);
   };
 
-  const orderHandler = () => {
-    const params = { id: menu?._id, name: menu?.name, isHot, count };
-    console.log(params);
-    // router.push('/story');
+  const orderHandler = async () => {
+    const params = { userId: menu?._id, menu: menu?.name, isHot, count };
+    try {
+      await takeOrder(params);
+      router.push('/story');
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>

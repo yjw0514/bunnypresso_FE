@@ -1,6 +1,8 @@
 import None from '@/components/Common/None';
+import { getOrderList } from '@/lib/api/menu';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
 const menu = {
   id: 1,
@@ -13,6 +15,24 @@ const menu = {
 };
 
 export default function story() {
+  // TODO: 주문목록 어떻게 refresh 할건지
+  // TODO: 주문목록 가져올떄 userId를 보내서 내 주문 순서?도 같이 응답받을 수 있도록 하기
+  const [list, setList] = useState();
+  const { isLoading, isError, data, error, isSuccess } = useQuery(
+    'orderList',
+    () => getOrderList(),
+    {
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        const { orderList } = data.data;
+        setList(orderList);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+
   return (
     <div className="bg-gray-50">
       <div className="px-4 pt-4 pb-6 mb-2 bg-white border-b border-gray-100 flex-between ">
