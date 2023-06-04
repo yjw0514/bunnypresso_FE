@@ -8,3 +8,10 @@ export type menuType = {
   desc: string;
   category: string;
 };
+
+export type orderType = {
+  userId?: string;
+  menu?: string;
+  isHot: boolean;
+  count: number;
+};
