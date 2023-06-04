@@ -13,5 +13,9 @@ export const signUp = ({ name, password }: SignUpValue) => {
   });
 };
 
+export const refreshChk = (refreshToken: any) => {
+  return instance.post('/refresh', { refreshToken });
+};
+
 const AuthApi = { signIn, signUp };
 export default AuthApi;
