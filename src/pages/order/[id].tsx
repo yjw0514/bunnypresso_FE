@@ -56,7 +56,12 @@ export default function Detail() {
   };
 
   const orderHandler = async () => {
-    const params = { userId: menu?._id, menu: menu?.name, isHot, count };
+    const params = {
+      userId: localStorage.getItem('userId') as string,
+      menu: menu?.name,
+      isHot,
+      count,
+    };
     try {
       await takeOrder(params);
       router.push('/story');
