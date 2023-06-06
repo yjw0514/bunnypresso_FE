@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import BasicButton from '@/components/Button/BasicButton';
 import BasicModal from '@/components/Modal/BasicModal';
@@ -23,7 +23,7 @@ export default function Detail() {
 
   // 메뉴 상세정보 api
   const { isLoading, isError, data, error, isSuccess } = useQuery(
-    'menuId',
+    ['menuId'],
     () => getMenuDetail(id as string),
     {
       refetchOnWindowFocus: false,

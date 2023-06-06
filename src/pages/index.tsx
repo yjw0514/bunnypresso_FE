@@ -12,7 +12,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { LoginValue } from '@/dto/loginDto';
 import { loginSchema } from '@/utils/schema';
 import { signIn, signUp } from '@/lib/api/auth';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
