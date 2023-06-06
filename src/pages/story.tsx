@@ -3,7 +3,7 @@ import { getOrderList } from '@/lib/api/menu';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 type listType = {
   name: string;
@@ -15,8 +15,6 @@ type listType = {
   isHot: boolean;
 };
 export default function story() {
-  // TODO: 주문목록 어떻게 refresh 할건지
-
   const [list, setList] = useState<null | listType[]>(null);
   const [orderNum, setOrderNum] = useState(0);
   const [orderDate, setOrderDate] = useState<string | null>(null);
@@ -24,11 +22,12 @@ export default function story() {
   const router = useRouter();
 
   const { isLoading, isError, data, error, isSuccess } = useQuery(
-    'orderList',
+    ['orderList'],
     () => getOrderList(),
     {
       refetchOnWindowFocus: false,
       onSuccess: (data) => {
+        console.log('호출', new Date());
         const { orderList } = data.data;
         if (!orderList.length) return router.push('/order');
         setList(orderList);
@@ -39,6 +38,7 @@ export default function story() {
       onError: (error) => {
         console.log(error);
       },
+      refetchInterval: 60000, //1분마다 호출(polling)
     }
   );
 
