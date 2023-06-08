@@ -40,6 +40,7 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const errorConfig = error.config;
+    console.log('error response : ', error.response.status);
     if (error.response.status === 401) {
       if (error.response.data.message === 'token expired') {
         // 권한없음. 엑세스 토큰 만료
@@ -59,7 +60,6 @@ instance.interceptors.response.use(
       }
     }
 
-    console.log('err', error);
     // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
     // 응답 오류가 있는 작업 수행
     return Promise.reject(error);
