@@ -10,6 +10,7 @@ type ModalType = {
   title?: string;
   onConfirm?: MouseEventHandler<HTMLButtonElement>;
   btnName?: string;
+  hasOneBtn?: Boolean;
 };
 
 export default function BasicModal({
@@ -19,6 +20,7 @@ export default function BasicModal({
   title = '모달',
   onConfirm,
   btnName = '확인',
+  hasOneBtn = false,
 }: ModalType) {
   return (
     <>
@@ -47,23 +49,31 @@ export default function BasicModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md p-4 flex flex-col justify-between overflow-hidden min-h-[200px] text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <Dialog.Panel className="w-full max-w-md p-4 flex flex-col justify-between overflow-hidden min-h-[200px] text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
                   <Dialog.Title
                     as="h3"
-                    className="mb-2 text-lg font-semibold leading-6 text-center text-primary"
+                    className="text-lg font-semibold leading-6 text-center text-primary"
                   >
                     {title}
                   </Dialog.Title>
-                  <div className="mt-2">{children}</div>
-
-                  <div className="flex items-center justify-end gap-2 mt-4">
+                  <div>{children}</div>
+                  {hasOneBtn ? (
                     <BasicButton
-                      name={btnName}
+                      name="닫기"
                       utilType="fill"
-                      onClick={onConfirm}
+                      onClick={closeModal}
+                      className="!py-2"
                     />
-                    <BasicButton name="닫기" onClick={closeModal} />
-                  </div>
+                  ) : (
+                    <div className="flex items-center justify-end gap-2 mt-4">
+                      <BasicButton
+                        name={btnName}
+                        utilType="fill"
+                        onClick={onConfirm}
+                      />
+                      <BasicButton name="닫기" onClick={closeModal} />
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
