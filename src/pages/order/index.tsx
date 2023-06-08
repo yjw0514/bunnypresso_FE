@@ -1,7 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import MenuItem from '@/components/Order/MenuItem';
 import withAuth from '@/utils/withAuth';
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import useModal from '@/hooks/useModal';
+import BasicModal from '@/components/Modal/BasicModal';
+
 const CATEGORY = [
   'COFFEE',
   'BANACCINO & SMOOTHIE',
@@ -13,12 +17,19 @@ const CATEGORY = [
 const order: NextPage = ({
   menu,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
   const [tap, setTap] = useState(0);
   const [menuList, setMenuList] = useState([]);
+  const { isOpen, closeModal, openModal } = useModal();
+
   useEffect(() => {
+    if (router.query.alert) {
+      router.replace(`/order`, undefined, { shallow: true });
+      openModal();
+    }
     const list = menu.filter((el: any) => el.category === CATEGORY[tap]);
     setMenuList(list);
-  }, [tap]);
+  }, [tap, router]);
   return (
     <div className="h-screen pt-[52px] overflow-hidden">
       <div>
@@ -51,6 +62,20 @@ const order: NextPage = ({
           </ul>
         </div>
       </div>
+      {isOpen && (
+        <BasicModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          title={'알림'}
+          hasOneBtn={true}
+        >
+          <div className="text-center">
+            주문하신 상품이 없습니다.
+            <br />
+            주문 후 이용해주세요.
+          </div>
+        </BasicModal>
+      )}
     </div>
   );
 };
