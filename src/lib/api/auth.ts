@@ -13,7 +13,7 @@ export const signUp = ({ name, password }: SignUpValue) => {
   });
 };
 
-export const refreshChk = (refreshToken: any) => {
+export const refreshChk = (refreshToken: string) => {
   return instance.post('/refresh', { refreshToken });
 };
 
