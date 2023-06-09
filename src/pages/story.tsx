@@ -1,11 +1,14 @@
-import None from '@/components/Common/None';
 import { getOrderList } from '@/lib/api/menu';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import withAuth from '@/utils/withAuth';
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from 'next';
 
 type listType = {
   name: string;
@@ -18,7 +21,7 @@ type listType = {
 };
 const story: NextPage = ({
   orderList,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [list, setList] = useState<null | listType[]>(null);
   const [orderNum, setOrderNum] = useState(0);
   const [orderDate, setOrderDate] = useState<string | null>(null);
@@ -132,7 +135,7 @@ const story: NextPage = ({
 };
 export default withAuth(story);
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch('http://localhost:5000/order/list');
   const { orderList } = await res.json();
   if (!orderList.length) {
