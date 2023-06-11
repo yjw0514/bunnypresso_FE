@@ -17,7 +17,7 @@ type listType = {
   menu: string;
   count: number;
   createdAt: Date;
-  isHot: boolean;
+  isHot?: boolean;
 };
 const Story: NextPage = ({
   orderList,
