@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/store/slice/authSlice';
+import menuReducer from '@/store/slice/menuSlice';
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -15,11 +16,12 @@ import {
 const persistConfig = {
   key: 'root', // localStorage key
   storage, // localStorage
-  whitelist: ['auth'], // target (reducer name)
+  whitelist: ['auth', 'menu'], // target (reducer name)
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  menu: menuReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

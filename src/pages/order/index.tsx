@@ -5,6 +5,8 @@ import MenuItem from '@/components/Order/MenuItem';
 import withAuth from '@/utils/withAuth';
 import useModal from '@/hooks/useModal';
 import BasicModal from '@/components/Modal/BasicModal';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { changeTap } from '@/store/slice/menuSlice';
 
 const CATEGORY = [
   'COFFEE',
@@ -17,9 +19,10 @@ const CATEGORY = [
 const order: NextPage = ({
   menu,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const router = useRouter();
-  const [tap, setTap] = useState(0);
   const [menuList, setMenuList] = useState([]);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const tap = useAppSelector((state) => state.menu.tap);
   const { isOpen, closeModal, openModal } = useModal();
 
   useEffect(() => {
@@ -45,7 +48,9 @@ const order: NextPage = ({
                       ? 'text-black font-bold text-xs !border-black'
                       : ''
                   } relative transition-all duration-300 pb-3 border-b-2 border-transparent`}
-                  onClick={() => setTap(idx)}
+                  onClick={() => {
+                    dispatch(changeTap(idx));
+                  }}
                 >
                   <p>{menu}</p>
                 </li>
