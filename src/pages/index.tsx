@@ -19,8 +19,8 @@ import { login, logout } from '@/store/slice/authSlice';
 
 const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const [name, setName] = useState<string | null>(null);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const dispatch = useAppDispatch();
 

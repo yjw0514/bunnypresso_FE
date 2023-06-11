@@ -9,8 +9,8 @@ import { useRouter } from 'next/router';
 import Tooltip from '@/components/Tooltip/index';
 
 export default function Footer() {
-  const { pathname } = useRouter();
   const [showTooltip, setShowTooltip] = useState(true);
+  const { pathname } = useRouter();
 
   useEffect(() => {
     setTimeout(() => {

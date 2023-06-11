@@ -1,6 +1,6 @@
 import None from '@/components/Common/None';
 import React from 'react';
 
-export default function menu() {
+export default function Menu() {
   return <None />;
 }

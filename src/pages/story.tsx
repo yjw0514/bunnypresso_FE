@@ -19,7 +19,7 @@ type listType = {
   createdAt: Date;
   isHot: boolean;
 };
-const story: NextPage = ({
+const Story: NextPage = ({
   orderList,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [list, setList] = useState<null | listType[]>(null);
@@ -133,7 +133,7 @@ const story: NextPage = ({
     </div>
   );
 };
-export default withAuth(story);
+export default withAuth(Story);
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch('http://localhost:5000/order/list');

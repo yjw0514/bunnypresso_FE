@@ -1,6 +1,5 @@
-import { Dialog, Transition } from '@headlessui/react';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import { BiArrowBack } from 'react-icons/bi';
 
 type ModalType = {
