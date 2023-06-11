@@ -16,11 +16,14 @@ export default function Detail() {
   const [count, setCount] = useState(1);
   const [menu, setMenu] = useState<menuType>();
   const [isHot, setIsHot] = useState(true);
+  const [oneOption, setOneOption] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
-
   const { id } = router.query;
 
+  useEffect(() => {
+    setOneOption(!!router.query.hasOneOption);
+  }, [oneOption]);
   // 메뉴 상세정보 api
   const { isLoading, isError, data, error, isSuccess } = useQuery(
     ['menuId'],
@@ -56,12 +59,21 @@ export default function Detail() {
   };
 
   const orderHandler = async () => {
-    const params = {
-      userId: localStorage.getItem('userId') as string,
-      menu: menu?.name,
-      isHot,
-      count,
-    };
+    let params = null;
+    if (oneOption) {
+      params = {
+        userId: localStorage.getItem('userId') as string,
+        menu: menu?.name,
+        count,
+      };
+    } else {
+      params = {
+        userId: localStorage.getItem('userId') as string,
+        menu: menu?.name,
+        isHot,
+        count,
+      };
+    }
     try {
       await takeOrder(params);
       router.push('/story');
@@ -69,6 +81,7 @@ export default function Detail() {
       console.log(err);
     }
   };
+
   return (
     <>
       <div className="mt-[30px]" style={{ height: 'calc(100vh - 52px)' }}>
@@ -117,22 +130,24 @@ export default function Detail() {
                   </button>
                 </div>
               </div>
-              <div className="flex justify-center mt-4 space-x-2">
-                <button
-                  onClick={temperatureHandler}
-                  data-id="hot"
-                  className={`temp-btn ${isHot ? 'temp-active' : ''}`}
-                >
-                  Hot
-                </button>
-                <button
-                  onClick={temperatureHandler}
-                  data-id="ice"
-                  className={`temp-btn ${isHot ? '' : 'temp-active'}`}
-                >
-                  Ice
-                </button>
-              </div>
+              {!oneOption && (
+                <div className="flex justify-center mt-4 space-x-2">
+                  <button
+                    onClick={temperatureHandler}
+                    data-id="hot"
+                    className={`temp-btn ${isHot ? 'temp-active' : ''}`}
+                  >
+                    Hot
+                  </button>
+                  <button
+                    onClick={temperatureHandler}
+                    data-id="ice"
+                    className={`temp-btn ${isHot ? '' : 'temp-active'}`}
+                  >
+                    Ice
+                  </button>
+                </div>
+              )}
             </div>
             <BasicButton
               utilType="fill"
@@ -151,10 +166,11 @@ export default function Detail() {
           onConfirm={orderHandler}
         >
           <div className="text-center">
-            <p className="font-bold text-md text-primary">
+            <span className="font-bold text-md text-primary">
               {menu?.name}&nbsp;
-              {count}잔({isHot ? 'Hot' : 'Ice'})
-            </p>
+              {count}잔
+            </span>
+            {!oneOption && <span>({isHot ? 'Hot' : 'Ice'})</span>}
             <p className="mt-1">선택하신 음료를 주문하시겠습니까?</p>
           </div>
         </BasicModal>

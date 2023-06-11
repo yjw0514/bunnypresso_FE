@@ -12,6 +12,6 @@ export type menuType = {
 export type orderType = {
   userId?: string;
   menu?: string;
-  isHot: boolean;
+  isHot?: boolean;
   count: number;
 };

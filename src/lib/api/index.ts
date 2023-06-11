@@ -50,7 +50,7 @@ instance.interceptors.response.use(
           const { accessToken } = res.data;
           setCookie('accessToken', accessToken);
           errorConfig.headers.Authorization = `Bearer ${accessToken}`;
-          axios(errorConfig);
+          return axios(errorConfig);
         } catch (err) {
           console.log(err);
         }
