@@ -7,7 +7,7 @@ import useModal from '@/hooks/useModal';
 import BasicModal from '@/components/Modal/BasicModal';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { changeTap } from '@/store/slice/menuSlice';
-import { FiSearch } from 'react-icons/fi';
+import Search from '@/components/Order/Search';
 
 const CATEGORY = [
   'COFFEE',
@@ -36,12 +36,7 @@ const Order: NextPage = ({
   }, [tap, router]);
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
-        <h2 className="font-semibold">주문</h2>
-        <button>
-          <FiSearch />
-        </button>
-      </div>
+      <Search />
       <div className="h-screen pt-[52px] overflow-hidden">
         <div>
           {/* 메뉴 카테고리 */}
