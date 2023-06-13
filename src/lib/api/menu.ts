@@ -15,6 +15,3 @@ export const takeOrder = ({ userId, menu, isHot, count }: orderType) => {
 export const getOrderList = () => {
   return instance.get('/order/list');
 };
-
-const MenuApi = { getMenuDetail };
-export default MenuApi;
