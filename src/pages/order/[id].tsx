@@ -12,6 +12,7 @@ import { getMenuDetail, takeOrder } from '@/lib/api/menu';
 import Loading from '@/components/Loading';
 import { menuType } from '@/dto/menuDto';
 import { BiArrowBack } from 'react-icons/bi';
+import DetailHeader from '@/components/Order/DetailHeader';
 
 export default function Detail() {
   const [count, setCount] = useState(1);
@@ -85,14 +86,7 @@ export default function Detail() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
-        <div className="flex items-center space-x-3">
-          <button onClick={() => router.back()}>
-            <BiArrowBack size={20} />
-          </button>
-          <h2 className="font-semibold">메뉴 상세</h2>
-        </div>
-      </div>
+      <DetailHeader />
       <div className="mt-[30px]" style={{ height: 'calc(100vh - 52px)' }}>
         {menu && (
           <div className="flex flex-col items-center justify-center h-full mx-5 space-y-6">
