@@ -12,7 +12,7 @@ export default function PageLayout({
   const hasHeaderRoute = ['/order', '/order/[id]'];
   return (
     <div>
-      {hasHeaderRoute.includes(pathname) && <Header />}
+      {/* {hasHeaderRoute.includes(pathname) && <Header />} */}
       {children}
       {pathname !== '/order/[id]' && <Footer />}
     </div>

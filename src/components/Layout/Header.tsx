@@ -7,25 +7,5 @@ export default function Header() {
   const router = useRouter();
   const { pathname } = router;
 
-  return (
-    <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
-      {pathname === '/order/[id]' ? (
-        <>
-          <div className="flex items-center space-x-3">
-            <button onClick={() => router.back()}>
-              <BiArrowBack size={20} />
-            </button>
-            <h2 className="font-semibold">메뉴 상세</h2>
-          </div>
-        </>
-      ) : (
-        <>
-          <h2 className="font-semibold">주문</h2>
-          <button>
-            <FiSearch />
-          </button>
-        </>
-      )}
-    </div>
-  );
+  return null;
 }
