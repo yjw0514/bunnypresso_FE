@@ -2,6 +2,7 @@ import { FiSearch } from 'react-icons/fi';
 import BasicInput from '../Input/BasicInput';
 
 const Search = () => {
+  // 검색
   const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
       searchMenu();
