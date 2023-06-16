@@ -92,7 +92,7 @@ const Order: NextPage = ({
 export default withAuth(Order);
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:5000/menu');
+  const res = await fetch('http://localhost:8080/menu');
   const { menu } = await res.json();
   return { props: { menu } };
 };
