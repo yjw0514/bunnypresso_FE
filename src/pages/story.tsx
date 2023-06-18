@@ -136,7 +136,7 @@ const Story: NextPage = ({
 export default withAuth(Story);
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('http://localhost:8080/order/list');
+  const res = await fetch('https://bunnypresso.fly.dev/order/list');
   const { orderList } = await res.json();
   if (!orderList.length) {
     return {
