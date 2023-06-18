@@ -136,7 +136,7 @@ const Story: NextPage = ({
 export default withAuth(Story);
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('https://bunnypresso-be.vercel.app/order/list');
+  const res = await fetch('https://bunnypresso.fly.dev/order/list');
   const { orderList } = await res.json();
   if (!orderList.length) {
     return {

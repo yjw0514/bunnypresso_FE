@@ -92,7 +92,7 @@ const Order: NextPage = ({
 export default withAuth(Order);
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('https://bunnypresso-be.vercel.app/menu');
+  const res = await fetch('https://bunnypresso.fly.dev/menu');
   const { menu } = await res.json();
   return { props: { menu } };
 };
