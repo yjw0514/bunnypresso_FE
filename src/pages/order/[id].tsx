@@ -13,38 +13,20 @@ import Loading from '@/components/Loading';
 import { menuType } from '@/dto/menuDto';
 import { BiArrowBack } from 'react-icons/bi';
 import DetailHeader from '@/components/Order/DetailHeader';
+import { GetStaticPaths } from 'next';
 
-export default function Detail() {
+export default function Detail({ menu: { detail } }: any) {
+  console.log(detail);
   const [count, setCount] = useState(1);
-  const [menu, setMenu] = useState<menuType>();
   const [isHot, setIsHot] = useState(true);
   const [oneOption, setOneOption] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
-  const { id } = router.query;
 
   useEffect(() => {
     setOneOption(!!router.query.hasOneOption);
   }, [oneOption]);
-  // 메뉴 상세정보 api
-  const { isLoading, isError, data, error, isSuccess } = useQuery(
-    ['menuId'],
-    () => getMenuDetail(id as string),
-    {
-      refetchOnWindowFocus: false,
-      onSuccess: (data) => {
-        const { detail } = data.data;
-        setMenu(detail);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
 
-  if (isLoading) {
-    return <Loading />;
-  }
   const countHandler = (e: React.MouseEvent<HTMLElement>) => {
     const isMinus = e.currentTarget.dataset['id'] === 'minus';
     if (isMinus) {
@@ -65,13 +47,13 @@ export default function Detail() {
     if (oneOption) {
       params = {
         userId: localStorage.getItem('userId') as string,
-        menu: menu?.name,
+        menu: detail?.name,
         count,
       };
     } else {
       params = {
         userId: localStorage.getItem('userId') as string,
-        menu: menu?.name,
+        menu: detail?.name,
         isHot,
         count,
       };
@@ -88,27 +70,28 @@ export default function Detail() {
     <>
       <DetailHeader />
       <div className="mt-[30px]" style={{ height: 'calc(100vh - 52px)' }}>
-        {menu && (
+        {detail && (
           <div className="flex flex-col items-center justify-center h-full mx-5 space-y-6">
             <Image
-              src={menu?.img_url}
+              src={detail?.img_url}
               alt="coffee"
               priority
               width="200"
               height="200"
             />
             <div className="flex flex-col items-center pb-5 border-b border-b-gray-200">
-              <h2 className="text-xl font-semibold">{menu.name}</h2>
+              <h2 className="text-xl font-semibold">{detail.name}</h2>
               <p className="mt-1 text-sm font-light text-gray-400">
-                {menu.en_name}
+                {detail.en_name}
               </p>
               <p className="mt-3 text-sm font-normal text-center text-gray-500 ">
-                {menu.desc}
+                {detail.desc}
               </p>
             </div>
             <div>
               <p className="mb-3 text-gray-500 text-md">
-                {addComma(menu.price)}원 (테이크아웃 {addComma(menu.takeout)}
+                {addComma(detail.price)}원 (테이크아웃{' '}
+                {addComma(detail.takeout)}
                 원)
               </p>
               <div className="mt-2 flex-between">
@@ -170,7 +153,7 @@ export default function Detail() {
         >
           <div className="text-center">
             <span className="font-bold text-md text-primary">
-              {menu?.name}&nbsp;
+              {detail?.name}&nbsp;
               {count}잔
             </span>
             {!oneOption && <span>({isHot ? 'Hot' : 'Ice'})</span>}
@@ -182,12 +165,20 @@ export default function Detail() {
   );
 }
 
-export async function getServerSideProps({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch('https://bunnypresso.fly.dev/menu');
+  const { menu } = await res.json();
+  const paths = menu.map((el: menuType) => ({
+    params: { id: el._id },
+  }));
+  return { paths, fallback: false };
+};
+export async function getStaticProps({ params }: any) {
+  const res = await fetch(`https://bunnypresso.fly.dev/menu/${params.id}`);
+  const menu = await res.json();
   return {
-    props: {},
+    props: {
+      menu,
+    },
   };
 }
