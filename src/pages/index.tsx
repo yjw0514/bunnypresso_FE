@@ -138,12 +138,6 @@ const Home = () => {
     }
   }, [localStorage.getItem('name')]);
 
-  const testLogin = () => {
-    axios.post('https://bunnypresso.fly.dev/login', {
-      name: '커피좋아',
-      password: 'zjvlwhgdk1',
-    });
-  };
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -183,7 +177,6 @@ const Home = () => {
           alt="banapresso"
         />
       </div>
-      <button onClick={testLogin}>로그인</button>
 
       {isOpenLogin && (
         <BasicModal
