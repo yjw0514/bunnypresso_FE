@@ -12,7 +12,6 @@
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@hookform/resolvers": "^3.1.0",
-    "@netlify/plugin-nextjs": "^4.37.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-query": "^4.29.12",
     "@tanstack/react-query-devtools": "^4.29.12",
@@ -39,6 +38,7 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.2.15",
     "sass": "^1.62.1"
   }
 }
