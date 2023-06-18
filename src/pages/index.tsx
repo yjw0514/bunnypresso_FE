@@ -63,7 +63,7 @@ const Home = () => {
     isSuccess: signUpSuccess,
   } = useMutation(signUp, {
     onMutate() {
-      console.log('onMutate -> ');
+      console.log('onMutate -> signUp ');
     },
     onSuccess: (data, variables, context) => {
       setIsSingUp((prev) => !prev);
@@ -77,7 +77,7 @@ const Home = () => {
   // 로그인 api
   const { mutate: loginMutate, isLoading: loginLoading } = useMutation(signIn, {
     onMutate() {
-      console.log('onMutate -> ');
+      console.log('onMutate -> login');
     },
     onSuccess: (data, variables, context) => {
       console.log(data);
@@ -88,6 +88,7 @@ const Home = () => {
     },
     // TODO: error 타입 해결
     onError: (error: any, variable, context) => {
+      console.log('login error', error);
       const { type, message } = error.response.data;
       console.log(type, message);
       setError(type, {

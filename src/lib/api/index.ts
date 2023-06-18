@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/store/hooks';
 import { logout } from '@/store/slice/authSlice';
-import { getCookie, setCookie } from '@/utils/cookies';
+import { getCookie, setCookie, removeCookie } from '@/utils/cookies';
 import axios from 'axios';
 import { refreshChk } from '@/lib/api/auth';
 
@@ -41,24 +41,24 @@ instance.interceptors.response.use(
   async function (error) {
     const errorConfig = error.config;
     console.log('error response : ', error.response.status);
-    if (
-      error.response.status === 401 &&
-      error.response.data.message === 'token expired'
-    ) {
-      // 권한없음. 엑세스 토큰 만료
-      const refreshToken = getCookie('refreshToken');
-      try {
-        const res = await refreshChk(refreshToken);
-        const { accessToken } = res.data;
-        setCookie('accessToken', accessToken);
-        errorConfig.headers.Authorization = `Bearer ${accessToken}`;
-        return axios(errorConfig);
-      } catch (err) {
-        console.log(err);
+    if (error.response.status === 401) {
+      if (error.response.data.message === 'token expired') {
+        // 권한없음. 엑세스 토큰 만료
+        const refreshToken = getCookie('refreshToken');
+        try {
+          const res = await refreshChk(refreshToken);
+          const { accessToken } = res.data;
+          setCookie('accessToken', accessToken);
+          errorConfig.headers.Authorization = `Bearer ${accessToken}`;
+          return axios(errorConfig);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        removeCookie('accessToken');
+        removeCookie('refreshToken');
+        localStorage.clear();
       }
-    } else {
-      const dispatch = useAppDispatch();
-      dispatch(logout());
     }
 
     // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
