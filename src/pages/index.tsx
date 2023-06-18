@@ -16,6 +16,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
+import axios from 'axios';
 
 const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
@@ -136,6 +137,13 @@ const Home = () => {
       setName(user);
     }
   }, [localStorage.getItem('name')]);
+
+  const testLogin = () => {
+    axios.post('https://bunnypresso.fly.dev/login', {
+      name: '커피좋아',
+      password: 'zjvlwhgdk1',
+    });
+  };
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -151,6 +159,7 @@ const Home = () => {
           </div>
         </div>
       )}
+
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
           <IconButton onClick={openLogout}>
@@ -174,6 +183,7 @@ const Home = () => {
           alt="banapresso"
         />
       </div>
+      <button onClick={testLogin}>로그인</button>
 
       {isOpenLogin && (
         <BasicModal
