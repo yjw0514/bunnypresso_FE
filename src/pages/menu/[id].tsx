@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useQuery } from '@tanstack/react-query';
 
 import BasicButton from '@/components/Button/BasicButton';
 import BasicModal from '@/components/Modal/BasicModal';
 import useModal from '@/hooks/useModal';
 import { addComma } from '@/utils/addComma';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { getMenuDetail, takeOrder } from '@/lib/api/menu';
-import Loading from '@/components/Loading';
+import { takeOrder } from '@/lib/api/menu';
 import { menuType } from '@/dto/menuDto';
-import { BiArrowBack } from 'react-icons/bi';
-import DetailHeader from '@/components/Order/DetailHeader';
+import DetailHeader from '@/components/Menu/DetailHeader';
 import { GetStaticPaths } from 'next';
+import { useAppSelector } from '@/store/hooks';
 
 export default function Detail({ menu: { detail } }: any) {
-  console.log(detail);
   const [count, setCount] = useState(1);
   const [isHot, setIsHot] = useState(true);
   const [oneOption, setOneOption] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
     setOneOption(!!router.query.hasOneOption);
@@ -64,6 +62,13 @@ export default function Detail({ menu: { detail } }: any) {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const openOrderModal = () => {
+    if (!isLoggedIn) {
+      return router.replace(`/?type=login`);
+    }
+    openModal();
   };
 
   return (
@@ -139,7 +144,7 @@ export default function Detail({ menu: { detail } }: any) {
               utilType="fill"
               className="!px-3 !py-2 !mt-10 !rounded-3xl"
               name="바로 주문하기"
-              onClick={openModal}
+              onClick={openOrderModal}
             />
           </div>
         )}
@@ -166,7 +171,7 @@ export default function Detail({ menu: { detail } }: any) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('https://bunnypresso.fly.dev/menu');
+  const res = await fetch('http://localhost:8080/menu');
   const { menu } = await res.json();
   const paths = menu.map((el: menuType) => ({
     params: { id: el._id },
@@ -174,7 +179,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 export async function getStaticProps({ params }: any) {
-  const res = await fetch(`https://bunnypresso.fly.dev/menu/${params.id}`);
+  const res = await fetch(`http://localhost:8080/menu/${params.id}`);
   const menu = await res.json();
   return {
     props: {

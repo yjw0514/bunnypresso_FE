@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import MenuItem from '@/components/Order/MenuItem';
+import MenuItem from '@/components/Menu/MenuItem';
 import withAuth from '@/utils/withAuth';
 import useModal from '@/hooks/useModal';
 import BasicModal from '@/components/Modal/BasicModal';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { changeTap } from '@/store/slice/menuSlice';
-import Search from '@/components/Order/Search';
+import Search from '@/components/Menu/Search';
 
 const CATEGORY = [
   'COFFEE',
@@ -17,7 +17,7 @@ const CATEGORY = [
   'DESSERT',
 ];
 
-const Order: NextPage = ({
+const Menu: NextPage = ({
   menu,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [menuList, setMenuList] = useState([]);
@@ -28,7 +28,7 @@ const Order: NextPage = ({
 
   useEffect(() => {
     if (router.query.alert) {
-      router.replace(`/order`, undefined, { shallow: true });
+      router.replace(`/menu`, undefined, { shallow: true });
       openModal();
     }
     const list = menu.filter((el: any) => el.category === CATEGORY[tap]);
@@ -89,10 +89,10 @@ const Order: NextPage = ({
   );
 };
 
-export default withAuth(Order);
+export default Menu;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('https://bunnypresso.fly.dev/menu');
+  const res = await fetch('http://localhost:8080/menu');
   const { menu } = await res.json();
   return { props: { menu } };
 };

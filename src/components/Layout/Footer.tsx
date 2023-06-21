@@ -41,7 +41,7 @@ export default function Footer() {
           <p>멤버쉽</p>
         </div>
       </Link>
-      <Link href="/order" className="relative">
+      <Link href="/menu" className="relative">
         {showTooltip && (
           <div className="absolute left-1/2 translate-x-[-50%] bottom-16">
             <Tooltip />
@@ -50,16 +50,16 @@ export default function Footer() {
 
         <div
           className={`menu-item  ${
-            pathname === '/order' ? 'active' : 'unactive'
+            pathname === '/menu' ? 'active' : 'unactive'
           }`}
         >
           <BsPhoneFill />
           <p>주문</p>
         </div>
-        {pathname !== '/order' && (
+        {pathname !== '/menu' && (
           <div
             className={`fixed bottom-3 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.4rem] h-[3.4rem] rounded-full menu-item ${
-              pathname === '/order' ? 'active' : 'unactive'
+              pathname === '/menu' ? 'active' : 'unactive'
             }`}
           >
             <div className="gap-1 flex-col-center">

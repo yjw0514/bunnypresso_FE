@@ -37,7 +37,7 @@ const Story: NextPage = ({
       onSuccess: (data) => {
         console.log('호출', new Date());
         const { orderList } = data.data;
-        if (!orderList.length) return router.push('/order');
+        if (!orderList.length) return router.push('/menu');
         setList(orderList);
         const myOrder = orderList.find((el: listType) => el.userId === userId);
         setOrderNum(myOrder.orderNum);
@@ -136,13 +136,13 @@ const Story: NextPage = ({
 export default withAuth(Story);
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('https://bunnypresso.fly.dev/order/list');
+  const res = await fetch('http://localhost:8080/menu/list');
   const { orderList } = await res.json();
   if (!orderList.length) {
     return {
       redirect: {
         permanent: false,
-        destination: '/order?alert=true',
+        destination: '/menu?alert=true',
       },
     };
   }

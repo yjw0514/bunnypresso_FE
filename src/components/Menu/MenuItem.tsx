@@ -16,9 +16,9 @@ export default function MenuItem({ menu }: ItemPropsType) {
   const hasOneOption = [1, 2, 4]; //ice만 있는 메뉴 index
   const onClickMenu = (id: string) => {
     if (hasOneOption.includes(tap)) {
-      return router.push(`/order/${id}?hasOneOption=true`);
+      return router.push(`/menu/${id}?hasOneOption=true`);
     }
-    router.push(`/order/${id}`);
+    router.push(`/menu/${id}`);
   };
 
   return (
