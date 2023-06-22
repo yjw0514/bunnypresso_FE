@@ -79,11 +79,9 @@ export default function Footer() {
           <p>스토리</p>
         </div>
       </Link>
-      <Link href="/menu">
+      <Link href="/all">
         <div
-          className={`menu-item ${
-            pathname === '/menu' ? 'active' : 'unactive'
-          }`}
+          className={`menu-item ${pathname === '/all' ? 'active' : 'unactive'}`}
         >
           <TbBorderAll size="20" />
           <p>전체</p>
