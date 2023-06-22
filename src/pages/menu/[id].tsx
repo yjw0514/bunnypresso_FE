@@ -171,7 +171,7 @@ export default function Detail({ menu: { detail } }: any) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('http://localhost:8080/menu');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/menu`);
   const { menu } = await res.json();
   const paths = menu.map((el: menuType) => ({
     params: { id: el._id },
@@ -179,7 +179,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 export async function getStaticProps({ params }: any) {
-  const res = await fetch(`http://localhost:8080/menu/${params.id}`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_AUTH_API_URL}/menu/${params.id}`
+  );
   const menu = await res.json();
   return {
     props: {

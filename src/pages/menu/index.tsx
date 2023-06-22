@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import MenuItem from '@/components/Menu/MenuItem';
-import withAuth from '@/utils/withAuth';
 import useModal from '@/hooks/useModal';
 import BasicModal from '@/components/Modal/BasicModal';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { changeTap } from '@/store/slice/menuSlice';
-import Search from '@/components/Menu/Search';
+import Search from '@/components/Menu/SearchPopup';
+import { FiSearch } from 'react-icons/fi';
+import FullModal from '@/components/Modal/FullModal';
+import SearchPopup from '@/components/Menu/SearchPopup';
 
 const CATEGORY = [
   'COFFEE',
@@ -25,6 +27,11 @@ const Menu: NextPage = ({
   const dispatch = useAppDispatch();
   const tap = useAppSelector((state) => state.menu.tap);
   const { isOpen, closeModal, openModal } = useModal();
+  const {
+    isOpen: isSearchOpen,
+    closeModal: closeSearchModal,
+    openModal: openSearchModal,
+  } = useModal();
 
   useEffect(() => {
     if (router.query.alert) {
@@ -36,7 +43,20 @@ const Menu: NextPage = ({
   }, [tap, router]);
   return (
     <>
-      <Search />
+      <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
+        <h2 className="font-semibold">주문</h2>
+        {/* <div className="flex items-center w-1/2 px-2 py-1 space-x-2 border border-gray-300 rounded ">
+        <input
+          placeholder="상품명을 입력하세요."
+          type="text"
+          maxLength={20}
+          className="w-full focus:outline-none placeholder:text-gray-400 placeholder:text-sm"
+          onKeyDown={onEnter}
+          onChange={onChange}
+        />
+      </div> */}
+        <FiSearch onClick={openSearchModal} />
+      </div>
       <div className="h-screen pt-[52px] overflow-hidden">
         <div>
           {/* 메뉴 카테고리 */}
@@ -84,6 +104,7 @@ const Menu: NextPage = ({
             </div>
           </BasicModal>
         )}
+        {isSearchOpen && <SearchPopup />}
       </div>
     </>
   );
@@ -92,7 +113,7 @@ const Menu: NextPage = ({
 export default Menu;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:8080/menu');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/menu`);
   const { menu } = await res.json();
   return { props: { menu } };
 };

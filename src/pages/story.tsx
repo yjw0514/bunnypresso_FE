@@ -136,7 +136,7 @@ const Story: NextPage = ({
 export default withAuth(Story);
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch('http://localhost:8080/menu/list');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/order/list`);
   const { orderList } = await res.json();
   if (!orderList.length) {
     return {
