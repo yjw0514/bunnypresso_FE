@@ -1,5 +1,3 @@
-import { useAppDispatch } from '@/store/hooks';
-import { logout } from '@/store/slice/authSlice';
 import { getCookie, setCookie, removeCookie } from '@/utils/cookies';
 import axios from 'axios';
 import { refreshChk } from '@/lib/api/auth';
