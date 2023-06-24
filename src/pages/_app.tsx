@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </Head>
             <Component {...pageProps} />
           </PageLayout>
-          <ReactQueryDevtools initialIsOpen={false} position="top-left" />
+          {/* <ReactQueryDevtools initialIsOpen={false} position="top-left" /> */}
         </QueryClientProvider>
       </PersistGate>
     </Provider>

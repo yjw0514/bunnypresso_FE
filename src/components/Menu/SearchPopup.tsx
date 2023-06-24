@@ -2,11 +2,14 @@ import useModal from '@/hooks/useModal';
 import { getMenu } from '@/lib/api/menu';
 import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import FullModal from '../Modal/FullModal';
+import { IoMdClose } from 'react-icons/io';
+import FullModal from '@/components/Modal/FullModal';
+import { menuType } from '@/dto/menuDto';
+import MenuItem from './MenuItem';
 
-const SearchPopup = () => {
+const SearchPopup = ({ closeModal }: { closeModal: () => void }) => {
   const [value, setValue] = useState('');
-  const { isOpen, openModal, closeModal } = useModal();
+  const [list, setList] = useState<menuType[]>([]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
@@ -17,20 +20,20 @@ const SearchPopup = () => {
     }
   };
   const searchMenu = async () => {
-    console.log(value);
     try {
       const {
         data: { menu },
       } = await getMenu(value);
+      setList(menu);
+      console.log(menu);
     } catch (err) {
       console.log('err', err);
     }
   };
   return (
-    <FullModal isOpen={isOpen} closeModal={closeModal}>
-      <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
-        <h2 className="font-semibold">주문</h2>
-        {/* <div className="flex items-center w-1/2 px-2 py-1 space-x-2 border border-gray-300 rounded ">
+    <div className="fixed top-0 left-0 right-0 w-full ">
+      <div className="flex items-center w-full px-3 py-2 space-x-2 border-b border-gray-300 ">
+        <FiSearch />
         <input
           placeholder="상품명을 입력하세요."
           type="text"
@@ -39,9 +42,15 @@ const SearchPopup = () => {
           onKeyDown={onEnter}
           onChange={onChange}
         />
-      </div> */}
+        <IoMdClose size={20} onClick={closeModal} />
       </div>
-    </FullModal>
+      <ul
+        style={{ height: 'calc(100vh - 50px)' }}
+        className="pb-10 overflow-y-scroll scrollbar-hide"
+      >
+        {list && <MenuItem menu={list} />}
+      </ul>
+    </div>
   );
 };
 export default SearchPopup;

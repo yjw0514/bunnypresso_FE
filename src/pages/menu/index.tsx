@@ -5,8 +5,7 @@ import MenuItem from '@/components/Menu/MenuItem';
 import useModal from '@/hooks/useModal';
 import BasicModal from '@/components/Modal/BasicModal';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { changeTap } from '@/store/slice/menuSlice';
-import Search from '@/components/Menu/SearchPopup';
+import { changeTap, toggleSearchPopup } from '@/store/slice/menuSlice';
 import { FiSearch } from 'react-icons/fi';
 import FullModal from '@/components/Modal/FullModal';
 import SearchPopup from '@/components/Menu/SearchPopup';
@@ -27,11 +26,7 @@ const Menu: NextPage = ({
   const dispatch = useAppDispatch();
   const tap = useAppSelector((state) => state.menu.tap);
   const { isOpen, closeModal, openModal } = useModal();
-  const {
-    isOpen: isSearchOpen,
-    closeModal: closeSearchModal,
-    openModal: openSearchModal,
-  } = useModal();
+  const fromSearch = useAppSelector((state) => state.menu.searchPopup);
 
   useEffect(() => {
     if (router.query.alert) {
@@ -41,21 +36,15 @@ const Menu: NextPage = ({
     const list = menu.filter((el: any) => el.category === CATEGORY[tap]);
     setMenuList(list);
   }, [tap, router]);
+
+  const searchPopupHandler = () => {
+    dispatch(toggleSearchPopup());
+  };
   return (
     <>
       <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
         <h2 className="font-semibold">주문</h2>
-        {/* <div className="flex items-center w-1/2 px-2 py-1 space-x-2 border border-gray-300 rounded ">
-        <input
-          placeholder="상품명을 입력하세요."
-          type="text"
-          maxLength={20}
-          className="w-full focus:outline-none placeholder:text-gray-400 placeholder:text-sm"
-          onKeyDown={onEnter}
-          onChange={onChange}
-        />
-      </div> */}
-        <FiSearch onClick={openSearchModal} />
+        <FiSearch onClick={searchPopupHandler} />
       </div>
       <div className="h-screen pt-[52px] overflow-hidden">
         <div>
@@ -104,7 +93,11 @@ const Menu: NextPage = ({
             </div>
           </BasicModal>
         )}
-        {isSearchOpen && <SearchPopup />}
+        {fromSearch && (
+          <FullModal closeModal={searchPopupHandler}>
+            <SearchPopup closeModal={searchPopupHandler} />
+          </FullModal>
+        )}
       </div>
     </>
   );

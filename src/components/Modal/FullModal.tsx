@@ -1,7 +1,6 @@
 import { MouseEventHandler } from 'react';
 
 type ModalType = {
-  isOpen: boolean;
   closeModal: () => void;
   children: React.ReactNode;
   title?: string;
@@ -9,7 +8,6 @@ type ModalType = {
 };
 
 export default function FullModal({
-  isOpen = false,
   closeModal,
   children,
   title = '모달',

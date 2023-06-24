@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { menuType } from '@/dto/menuDto';
 import { addComma } from '@/utils/addComma';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useAppSelector } from '@/store/hooks';
 
 type ItemPropsType = {
   menu: menuType[];
@@ -11,7 +11,6 @@ type ItemPropsType = {
 
 export default function MenuItem({ menu }: ItemPropsType) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const tap = useAppSelector((state) => state.menu.tap);
   const hasOneOption = [1, 2, 4]; //ice만 있는 메뉴 index
   const onClickMenu = (id: string) => {

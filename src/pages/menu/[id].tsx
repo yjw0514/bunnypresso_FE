@@ -31,7 +31,6 @@ export default function Detail({ menu: { detail } }: any) {
       setCount((prev) => prev - 1);
       return;
     }
-
     setCount((prev) => prev + 1);
   };
 
