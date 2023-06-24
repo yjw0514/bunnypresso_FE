@@ -25,7 +25,7 @@ interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function BasicButton({
   name = '확인',
-  className,
+  className = '',
   onClick,
   utilType = 'outline',
   size = 'sm',
@@ -34,7 +34,8 @@ export default function BasicButton({
   return (
     <button
       onClick={onClick}
-      className={`${STYLE[utilType]} ${className} ${SIZE[size]} text-sm font-semibold border rounded-md `}
+      className={`${STYLE[utilType]} ${className} ${SIZE[size]} text-sm font-semibold border rounded-md disabled:border-gray-300 disabled:bg-gray-200`}
+      {...rest}
     >
       {name}
     </button>

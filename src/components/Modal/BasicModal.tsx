@@ -1,7 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, MouseEventHandler } from 'react';
 import BasicButton from '@/components/Button/BasicButton';
-import { SubmitHandler } from 'react-hook-form';
 
 type ModalType = {
   isOpen: boolean;
@@ -10,7 +9,8 @@ type ModalType = {
   title?: string;
   onConfirm?: MouseEventHandler<HTMLButtonElement>;
   btnName?: string;
-  hasOneBtn?: Boolean;
+  hasOneBtn?: boolean;
+  disabled?: boolean;
 };
 
 export default function BasicModal({
@@ -21,6 +21,7 @@ export default function BasicModal({
   onConfirm,
   btnName = '확인',
   hasOneBtn = false,
+  disabled = false,
 }: ModalType) {
   return (
     <>
@@ -70,7 +71,9 @@ export default function BasicModal({
                         name={btnName}
                         utilType="fill"
                         onClick={onConfirm}
+                        disabled={disabled}
                       />
+                      <div className="text-lg text-red-800">{disabled}</div>
                       <BasicButton name="닫기" onClick={closeModal} />
                     </div>
                   )}

@@ -51,6 +51,7 @@ const Home = () => {
     setError,
     reset,
     formState,
+
     formState: { errors, isSubmitSuccessful },
   } = useForm<LoginValue>({
     resolver: yupResolver(loginSchema),
@@ -67,6 +68,7 @@ const Home = () => {
     },
     onSuccess: (data, variables, context) => {
       setIsSingUp((prev) => !prev);
+      reset();
       // localStorage.setItem('name', variables.name);
     },
     onError: (error, variable, context) => {
@@ -75,28 +77,32 @@ const Home = () => {
   });
 
   // 로그인 api
-  const { mutate: loginMutate, isLoading: loginLoading } = useMutation(signIn, {
-    onMutate() {
-      console.log('onMutate -> login');
-    },
-    onSuccess: (data, variables, context) => {
-      console.log(data);
-      dispatch(login());
-      localStorage.setItem('name', variables.name);
-      localStorage.setItem('userId', data.data.userId);
-      closeLogin();
-    },
-    // TODO: error 타입 해결
-    onError: (error: any, variable, context) => {
-      console.log('login error', error);
-      const { type, message } = error.response.data;
-      console.log(type, message);
-      setError(type, {
-        type,
-        message,
-      });
-    },
-  });
+  const { mutate: loginMutate, isLoading: isLoginLoading } = useMutation(
+    signIn,
+    {
+      onMutate() {
+        console.log('onMutate -> login');
+      },
+      onSuccess: (data, variables, context) => {
+        console.log(data);
+        dispatch(login());
+        reset();
+        localStorage.setItem('name', variables.name);
+        localStorage.setItem('userId', data.data.userId);
+        closeLogin();
+      },
+      // TODO: error 타입 해결
+      onError: (error: any, variable, context) => {
+        const { type, message } = error.response.data;
+        console.log(type, message);
+
+        setError(type, {
+          type,
+          message,
+        });
+      },
+    }
+  );
 
   // submit handler
   const submitHandler: SubmitHandler<LoginValue> = (data) => {
@@ -111,20 +117,14 @@ const Home = () => {
   // 로그인/회원가입 모달 닫기
   const closeModal = () => {
     setIsSingUp(false);
-    console.log(isOpenLogin);
+    reset();
+
     if (isOpenLogin) {
       closeLogin();
       return;
     }
     openLogin();
   };
-
-  // 회원가입 후 인풋 초기화
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  }, [reset, formState]);
 
   // 로그아웃
   const onLogout = () => {
@@ -138,7 +138,6 @@ const Home = () => {
       setName(user);
     }
   }, [localStorage.getItem('name')]);
-
   return (
     <div className="container h-screen">
       {isLoggedIn && (
@@ -186,6 +185,7 @@ const Home = () => {
           btnName={isSignUp ? '회원가입' : '로그인'}
           title={isSignUp ? 'Welcome 🐰' : 'Enjoy your coffee ☕️'}
           onConfirm={handleSubmit(submitHandler)}
+          disabled={isLoginLoading}
         >
           <form>
             {signUpSuccess && (
