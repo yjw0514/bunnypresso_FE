@@ -139,7 +139,7 @@ const Home = () => {
     }
   }, [localStorage.getItem('name')]);
   return (
-    <div className="container h-screen">
+    <div className="h-screen wrapper">
       {isLoggedIn && (
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-lg flex-center bg-[#dbdbdb]">
@@ -164,7 +164,7 @@ const Home = () => {
         )}
       </div>
 
-      <div>
+      <div className="w-full">
         <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[4rem] font-bold text-transparent text-center ">
           Welcome to <br />
           BunnyPresso
@@ -172,7 +172,7 @@ const Home = () => {
         </p>
         {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
         <img
-          className="w-3/4 mx-auto mt-8"
+          className="w-3/4 max-w-sm mx-auto mt-8"
           src="https://www.banapresso.com/mo/static/media/greeting.b4aa8c76d4594b10386c.gif"
           alt="banapresso"
         />
