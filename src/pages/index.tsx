@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
 import axios from 'axios';
+import { getCookie } from '@/utils/cookies';
 
 const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
@@ -85,6 +86,11 @@ const Home = () => {
       },
       onSuccess: (data, variables, context) => {
         console.log(data);
+        if (!getCookie('accessToken') || getCookie('refreshToken')) {
+          closeLogin();
+          dispatch(logout());
+          return;
+        }
         dispatch(login());
         reset();
         localStorage.setItem('name', variables.name);
