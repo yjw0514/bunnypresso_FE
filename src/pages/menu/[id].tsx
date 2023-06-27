@@ -11,7 +11,9 @@ import { takeOrder } from '@/lib/api/menu';
 import { menuType } from '@/dto/menuDto';
 import DetailHeader from '@/components/Menu/DetailHeader';
 import { GetStaticPaths } from 'next';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import axios from 'axios';
+import { logout } from '@/store/slice/authSlice';
 
 export default function Detail({ menu: { detail } }: any) {
   const [count, setCount] = useState(1);
@@ -20,6 +22,7 @@ export default function Detail({ menu: { detail } }: any) {
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setOneOption(!!router.query.hasOneOption);
@@ -59,7 +62,11 @@ export default function Detail({ menu: { detail } }: any) {
       await takeOrder(params);
       router.push('/story');
     } catch (err) {
-      console.log(err);
+      console.log('order error', err);
+      if (axios.isAxiosError(err) && err.response?.status === 401) {
+        dispatch(logout());
+        return router.replace(`/?type=login`);
+      }
     }
   };
 
