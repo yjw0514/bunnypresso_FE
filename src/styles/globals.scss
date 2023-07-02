@@ -8,6 +8,14 @@
 html,
 body {
   box-sizing: border-box;
+  .x-scroll-block {
+    overscroll-behavior-x: none;
+  }
+  touch-action: pan-y;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
 }
 
 @layer components {
