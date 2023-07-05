@@ -86,7 +86,7 @@ const Home = () => {
       },
       onSuccess: (data, variables, context) => {
         console.log(data);
-        if (!getCookie('accessToken') || getCookie('refreshToken')) {
+        if (!getCookie('accessToken') || !getCookie('refreshToken')) {
           closeLogin();
           dispatch(logout());
           return;
@@ -97,6 +97,7 @@ const Home = () => {
         localStorage.setItem('userId', data.data.userId);
         closeLogin();
       },
+
       // TODO: error 타입 해결
       onError: (error: any, variable, context) => {
         const { type, message } = error.response.data;
