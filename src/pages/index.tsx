@@ -184,7 +184,7 @@ const Home = () => {
             alt="banapresso"
             sizes="100%"
             priority
-            fill
+            layout="fill"
           />
         </div>
       </div>
