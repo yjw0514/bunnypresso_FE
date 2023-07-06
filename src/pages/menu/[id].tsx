@@ -26,7 +26,7 @@ export default function Detail({ menu: { detail } }: any) {
 
   useEffect(() => {
     setOneOption(!!router.query.hasOneOption);
-  }, [oneOption]);
+  }, [router.query.hasOneOption]);
 
   const countHandler = (e: React.MouseEvent<HTMLElement>) => {
     const isMinus = e.currentTarget.dataset['id'] === 'minus';

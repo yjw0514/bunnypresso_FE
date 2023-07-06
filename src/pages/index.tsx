@@ -44,7 +44,7 @@ const Home = () => {
       openLogin();
       router.replace(`/`, undefined, { shallow: true });
     }
-  }, []);
+  }, [router]);
 
   const {
     register,
@@ -144,7 +144,7 @@ const Home = () => {
       const user = localStorage.getItem('name');
       setName(user);
     }
-  }, [localStorage.getItem('name')]);
+  }, [localStorage.getItem('name'), isLoggedIn]);
   return (
     <div className="h-screen wrapper">
       {isLoggedIn && (
