@@ -16,7 +16,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
-import axios from 'axios';
 import { getCookie } from '@/utils/cookies';
 
 const Home = () => {

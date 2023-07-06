@@ -35,7 +35,6 @@ const Story: NextPage = ({
       initialData: orderList,
       refetchOnWindowFocus: false,
       onSuccess: (data) => {
-        console.log('호출', new Date());
         const { orderList } = data.data;
         if (!orderList.length) return router.push('/menu');
         setList(orderList);
