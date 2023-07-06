@@ -10,7 +10,7 @@ const Loading = () => {
           alt="loading"
           sizes="100%"
           priority
-          layout="fill"
+          fill
         />
       </div>
     </div>
