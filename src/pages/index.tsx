@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
 import { getCookie } from '@/utils/cookies';
+import Image from 'next/image';
 
 const Home = () => {
   const [isSignUp, setIsSingUp] = useState(false);
@@ -177,11 +178,15 @@ const Home = () => {
           <br />
         </p>
         {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
-        <img
-          className="w-3/4 max-w-sm mx-auto mt-8"
-          src="https://www.banapresso.com/mo/static/media/greeting.b4aa8c76d4594b10386c.gif"
-          alt="banapresso"
-        />
+        <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
+          <Image
+            src="https://www.banapresso.com/mo/static/media/greeting.b4aa8c76d4594b10386c.gif"
+            alt="banapresso"
+            sizes="100%"
+            priority
+            fill
+          />
+        </div>
       </div>
 
       {isOpenLogin && (
