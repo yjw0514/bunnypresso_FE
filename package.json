@@ -38,7 +38,6 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.2.15",
     "sass": "^1.62.1"
   }
 }
