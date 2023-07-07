@@ -34,7 +34,7 @@ export default function MenuItem({ menu }: ItemPropsType) {
               <Image
                 src={img_url}
                 style={{ objectFit: 'contain' }}
-                fill
+                layout="fill"
                 sizes="100%"
                 alt="coffee"
                 priority
