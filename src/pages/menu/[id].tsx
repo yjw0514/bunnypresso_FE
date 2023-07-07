@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { GetStaticPaths } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -10,7 +11,6 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { takeOrder } from '@/lib/api/menu';
 import { menuType } from '@/dto/menuDto';
 import DetailHeader from '@/components/Menu/DetailHeader';
-import { GetStaticPaths } from 'next';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import axios from 'axios';
 import { logout } from '@/store/slice/authSlice';
