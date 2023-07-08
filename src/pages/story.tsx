@@ -118,7 +118,7 @@ const Story: NextPage = ({
                       <Image
                         src={img_url}
                         style={{ objectFit: 'contain' }}
-                        layout="fill"
+                        fill
                         alt="coffee"
                       />
                     </div>
