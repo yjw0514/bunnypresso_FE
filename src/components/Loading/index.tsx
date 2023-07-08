@@ -10,10 +10,7 @@ const Loading = () => {
           style={{ objectFit: 'contain' }}
           priority
           layout="fill"
-<<<<<<< HEAD
           sizes="100%"
-=======
->>>>>>> parent of bdda776 (feat. 원복)
         />
       </div>
     </div>
