@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
 import axios from 'axios';
-import { getCookie } from '@/utils/cookies';
+import { getCookie, setCookie } from '@/utils/cookies';
 import Image from 'next/image';
 
 const Home = () => {
@@ -73,8 +73,13 @@ const Home = () => {
       reset();
       // localStorage.setItem('name', variables.name);
     },
-    onError: (error, variable, context) => {
+    onError: (error: any, variable, context) => {
       console.log('onError -> ', error, variable);
+      const { type, message } = error.response.data;
+      setError(type, {
+        type,
+        message,
+      });
     },
   });
 
@@ -85,8 +90,11 @@ const Home = () => {
       onMutate() {
         console.log('onMutate -> login');
       },
-      onSuccess: (data, variables, context) => {
-        console.log(data);
+      onSuccess: ({ data }, variables, context) => {
+        console.log('success', data);
+        const { accessToken, refreshToken, userId } = data;
+        setCookie('accessToken', accessToken);
+        setCookie('refreshToken', refreshToken);
         if (!getCookie('accessToken') || !getCookie('refreshToken')) {
           closeLogin();
           dispatch(logout());
@@ -95,15 +103,13 @@ const Home = () => {
         dispatch(login());
         reset();
         localStorage.setItem('name', variables.name);
-        localStorage.setItem('userId', data.data.userId);
+        localStorage.setItem('userId', userId);
         closeLogin();
       },
 
       // TODO: error 타입 해결
       onError: (error: any, variable, context) => {
         const { type, message } = error.response.data;
-        console.log(type, message);
-
         setError(type, {
           type,
           message,
