@@ -7,7 +7,12 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
   },
   images: {
-    domains: ['www.banapresso.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.banapresso.com',
+      },
+    ],
   },
 };
 
