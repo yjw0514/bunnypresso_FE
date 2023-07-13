@@ -8,7 +8,6 @@ import {
 import Image from 'next/image';
 import { getOrderList } from '@/lib/api/menu';
 import { useQuery } from '@tanstack/react-query';
-import withAuth from '@/utils/withAuth';
 
 type listType = {
   name: string;
@@ -133,7 +132,7 @@ const Story: NextPage = ({
     </div>
   );
 };
-export default withAuth(Story);
+export default Story;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/order/list`);
