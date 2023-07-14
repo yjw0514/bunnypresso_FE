@@ -16,7 +16,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
-import axios from 'axios';
 import { getCookie, setCookie } from '@/utils/cookies';
 import Image from 'next/image';
 
@@ -186,13 +185,14 @@ const Home = () => {
         </p>
         {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
         <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
-          <Image
-            src="https://www.banapresso.com/mo/static/media/greeting.b4aa8c76d4594b10386c.gif"
+          {/* <Image
+            src="/image/greeting.gif"
             alt="banapresso"
             sizes="100%"
             priority
             fill
-          />
+          /> */}
+          <video src="/image/greeting.mp4" autoPlay muted loop playsInline />
         </div>
       </div>
 
