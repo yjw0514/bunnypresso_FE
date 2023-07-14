@@ -40,7 +40,6 @@ const Home = () => {
   const router = useRouter();
   useEffect(() => {
     if (router.query.type === 'login') {
-      console.log(router.pathname, router.query.type);
       openLogin();
       router.replace(`/`, undefined, { shallow: true });
     }
@@ -64,9 +63,9 @@ const Home = () => {
     isLoading: signUpLoading,
     isSuccess: signUpSuccess,
   } = useMutation(signUp, {
-    onMutate() {
-      console.log('onMutate -> signUp ');
-    },
+    // onMutate() {
+    //   console.log('onMutate -> signUp ');
+    // },
     onSuccess: (data, variables, context) => {
       setIsSingUp((prev) => !prev);
       reset();
@@ -86,11 +85,10 @@ const Home = () => {
   const { mutate: loginMutate, isLoading: isLoginLoading } = useMutation(
     signIn,
     {
-      onMutate() {
-        console.log('onMutate -> login');
-      },
+      // onMutate() {
+      //   console.log('onMutate -> login');
+      // },
       onSuccess: ({ data }, variables, context) => {
-        console.log('success', data);
         const { accessToken, refreshToken, userId } = data;
         setCookie('accessToken', accessToken);
         setCookie('refreshToken', refreshToken);
@@ -151,6 +149,11 @@ const Home = () => {
       setName(user);
     }
   }, [localStorage.getItem('name'), isLoggedIn]);
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      dispatch(logout());
+    }
+  }, [localStorage.getItem('accessToken')]);
   return (
     <div className="h-screen wrapper">
       {isLoggedIn && (
