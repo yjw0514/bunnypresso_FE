@@ -150,10 +150,10 @@ const Home = () => {
     }
   }, [localStorage.getItem('name'), isLoggedIn]);
   useEffect(() => {
-    if (!localStorage.getItem('accessToken')) {
+    if (!getCookie('accessToken')) {
       dispatch(logout());
     }
-  }, [localStorage.getItem('accessToken')]);
+  }, [getCookie('accessToken')]);
   return (
     <div className="h-screen wrapper">
       {isLoggedIn && (
