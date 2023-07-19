@@ -164,7 +164,7 @@ const Home = () => {
           <div className="font-semibold text-black text-md">
             <div>
               {name}님, <br />
-              안녕하세요! 테스트
+              안녕하세요!
             </div>
           </div>
         </div>
