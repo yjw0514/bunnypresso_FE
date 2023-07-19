@@ -188,14 +188,14 @@ const Home = () => {
         </p>
         {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
         <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
-          {/* <Image
+          <Image
             src="/image/greeting.gif"
             alt="banapresso"
             sizes="100%"
             priority
             fill
-          /> */}
-          <video src="/image/greeting.mp4" autoPlay muted loop playsInline />
+          />
+          {/* <video src="/image/greeting.mp4" autoPlay muted loop playsInline /> */}
         </div>
       </div>
 
