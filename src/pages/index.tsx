@@ -148,7 +148,7 @@ const Home = () => {
       const user = localStorage.getItem('name');
       setName(user);
     }
-  }, [localStorage.getItem('name'), isLoggedIn]);
+  }, [isLoggedIn]);
   useEffect(() => {
     if (!getCookie('accessToken')) {
       dispatch(logout());
