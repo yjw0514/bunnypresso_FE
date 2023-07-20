@@ -7,6 +7,7 @@ export type menuType = {
   takeout: number;
   desc: string;
   category: string;
+  img_name: string;
 };
 
 export type orderType = {

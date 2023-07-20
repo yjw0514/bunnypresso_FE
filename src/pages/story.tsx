@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   GetServerSideProps,
@@ -24,8 +24,12 @@ const Story: NextPage = ({
   const [list, setList] = useState<null | listType[]>(null);
   const [orderNum, setOrderNum] = useState(0);
   const [orderDate, setOrderDate] = useState<string | null>(null);
-  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [userId, setUserId] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    setUserId(localStorage.getItem('userId') ?? '');
+  }, []);
 
   const { isLoading, isError, data, error, isSuccess } = useQuery(
     ['orderList'],
@@ -118,7 +122,7 @@ const Story: NextPage = ({
                       <Image
                         src={img_url}
                         style={{ objectFit: 'contain' }}
-                        fill
+                        layout="fill"
                         alt="coffee"
                       />
                     </div>
