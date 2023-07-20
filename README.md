@@ -1,4 +1,4 @@
-# Bunnypresso
+# [Bunnypresso](https://bunnypresso-fe.vercel.app)
 
 ## 1. 프로젝트 소개
 바나프레소(카페) 주문 어플을 사용할 때 흥미롭다고 생각했던 기능(주문 후 다른 사람들이 주문한 음료를 볼 수 있는 기능, 나의 주문 순서를 시각적으로 확인할 수 있는 기능)과
