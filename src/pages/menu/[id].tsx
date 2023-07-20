@@ -84,7 +84,7 @@ export default function Detail({ menu: { detail } }: any) {
         {detail && (
           <div className="flex flex-col items-center justify-center h-full mx-5 space-y-6">
             <Image
-              src={detail?.img_url}
+              src={`/image/menu/${detail?.img_name}.webp`}
               alt="coffee"
               priority
               width="200"
