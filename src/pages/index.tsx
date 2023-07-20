@@ -154,6 +154,7 @@ const Home = () => {
       dispatch(logout());
     }
   }, [getCookie('accessToken')]);
+
   return (
     <div className="h-screen wrapper">
       {isLoggedIn && (
@@ -162,10 +163,10 @@ const Home = () => {
             <BsFillPersonFill size="34" color="#F3F3F3" />
           </div>
           <div className="font-semibold text-black text-md">
-            <div>
+            <p>
               {name}님, <br />
               안녕하세요!
-            </div>
+            </p>
           </div>
         </div>
       )}
@@ -186,7 +187,6 @@ const Home = () => {
           BunnyPresso
           <br />
         </p>
-        {/* <span className="flex justify-center mt-6 text-3xl">🐰☕️</span> */}
         <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
           <Image
             src="/image/greeting.gif"
@@ -195,7 +195,6 @@ const Home = () => {
             priority
             layout="fill"
           />
-          {/* <video src="/image/greeting.mp4" autoPlay muted loop playsInline /> */}
         </div>
       </div>
 
