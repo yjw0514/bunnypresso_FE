@@ -53,8 +53,6 @@ const Story: NextPage = ({
     }
   );
 
-  useEffect(() => {});
-
   return (
     <div className="bg-gray-50">
       <div className="px-4 pt-4 pb-6 mb-2 bg-white border-b border-gray-100 flex-between ">
@@ -123,9 +121,9 @@ const Story: NextPage = ({
                       )}
                       <Image
                         src={img_url}
-                        style={{ objectFit: 'contain' }}
                         layout="fill"
                         alt="coffee"
+                        priority={true}
                       />
                     </div>
                   </li>
