@@ -192,7 +192,7 @@ const Home = () => {
             src="/image/greeting.gif"
             alt="banapresso"
             sizes="100%"
-            priority
+            priority={true}
             layout="fill"
           />
         </div>
