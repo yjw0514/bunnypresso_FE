@@ -1,9 +1,7 @@
-import useModal from '@/hooks/useModal';
 import { getMenu } from '@/lib/api/menu';
 import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
-import FullModal from '@/components/Modal/FullModal';
 import { menuType } from '@/dto/menuDto';
 import MenuItem from './MenuItem';
 
@@ -32,13 +30,13 @@ const SearchPopup = ({ closeModal }: { closeModal: () => void }) => {
   };
   return (
     <div className="fixed top-0 left-0 right-0 w-full ">
-      <div className="flex items-center w-full px-3 py-2 space-x-2 border-b border-gray-300 ">
+      <div className="flex items-center w-full px-3 py-4 space-x-2 border-b border-gray-300 ">
         <FiSearch />
         <input
           placeholder="상품명을 입력하세요."
           type="text"
           maxLength={20}
-          className="w-full focus:outline-none placeholder:text-gray-400 placeholder:text-sm"
+          className="w-full focus:outline-none placeholder:text-gray-400 placeholder:text-md"
           onKeyDown={onEnter}
           onChange={onChange}
         />
@@ -48,7 +46,13 @@ const SearchPopup = ({ closeModal }: { closeModal: () => void }) => {
         style={{ height: 'calc(100vh - 50px)' }}
         className="pb-10 overflow-y-scroll scrollbar-hide"
       >
-        {list && <MenuItem menu={list} />}
+        {list.length ? (
+          <MenuItem menu={list} />
+        ) : (
+          <div className="w-full h-full pt-10 text-center">
+            <p>검색 결과가 없습니다.</p>
+          </div>
+        )}
       </ul>
     </div>
   );
