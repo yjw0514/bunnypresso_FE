@@ -86,7 +86,7 @@ export default function Detail({ menu: { detail } }: any) {
             <Image
               src={detail?.img_url}
               alt="coffee"
-              priority
+              priority={true}
               width="200"
               height="200"
             />

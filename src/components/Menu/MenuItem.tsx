@@ -33,11 +33,10 @@ export default function MenuItem({ menu }: ItemPropsType) {
             <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative">
               <Image
                 src={img_url}
-                // style={{ objectFit: 'contain' }}
                 layout="fill"
                 sizes="100%"
                 alt={name}
-                priority
+                priority={true}
               />
             </div>
             <div className="flex flex-col space-y-1">

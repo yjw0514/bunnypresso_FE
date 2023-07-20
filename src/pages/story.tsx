@@ -121,9 +121,9 @@ const Story: NextPage = ({
                       )}
                       <Image
                         src={img_url}
-                        style={{ objectFit: 'contain' }}
                         layout="fill"
                         alt="coffee"
+                        priority={true}
                       />
                     </div>
                   </li>
