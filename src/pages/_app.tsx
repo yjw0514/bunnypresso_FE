@@ -18,6 +18,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/image/logo.ico" sizes="any" />
             <title>버니프레소</title>
             <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1, viewport-fit=contain"
+            />
+            <meta
               name="description"
               content="맛있는 음료와 디저트를 즐겨보세요."
               key="desc"
