@@ -33,8 +33,8 @@ export default function MenuItem({ menu }: ItemPropsType) {
             <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative">
               <Image
                 src={`/image/menu/${img_name}.webp`}
-                style={{ objectFit: 'contain' }}
-                fill
+                // style={{ objectFit: 'contain' }}
+                layout="fill"
                 sizes="100%"
                 alt="coffee"
                 priority

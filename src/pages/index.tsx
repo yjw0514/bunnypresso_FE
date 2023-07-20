@@ -193,7 +193,7 @@ const Home = () => {
             alt="banapresso"
             sizes="100%"
             priority
-            fill
+            layout="fill"
           />
           {/* <video src="/image/greeting.mp4" autoPlay muted loop playsInline /> */}
         </div>
