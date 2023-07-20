@@ -23,7 +23,7 @@ export default function MenuItem({ menu }: ItemPropsType) {
   return (
     <>
       {menu.map((menu) => {
-        const { _id, name, img_url, price, en_name, takeout, img_name } = menu;
+        const { _id, name, img_url, price, en_name, takeout } = menu;
         return (
           <li
             onClick={() => onClickMenu(_id)}
@@ -32,11 +32,11 @@ export default function MenuItem({ menu }: ItemPropsType) {
           >
             <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative">
               <Image
-                src={`/image/menu/${img_name}.webp`}
+                src={img_url}
                 // style={{ objectFit: 'contain' }}
                 layout="fill"
                 sizes="100%"
-                alt="coffee"
+                alt={name}
                 priority
               />
             </div>
