@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith('/story')) {
+  if (
+    request.nextUrl.pathname.startsWith('/story') ||
+    request.nextUrl.pathname.startsWith('/mypage')
+  ) {
     console.log('로그인 accessToken!', request.cookies.get('accessToken'));
     console.log('로그인 refreshToken!', request.cookies.get('refreshToken'));
     const accessToken = request.cookies.get('accessToken');
@@ -14,5 +17,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/story'],
+  matcher: ['/story', '/mypage'],
 };

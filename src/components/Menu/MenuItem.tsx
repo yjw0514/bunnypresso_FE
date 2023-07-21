@@ -12,13 +12,6 @@ type ItemPropsType = {
 export default function MenuItem({ menu }: ItemPropsType) {
   const router = useRouter();
   const tap = useAppSelector((state) => state.menu.tap);
-  const hasOneOption = [1, 2, 4]; //ice만 있는 메뉴 index
-  const onClickMenu = (id: string) => {
-    if (hasOneOption.includes(tap)) {
-      return router.push(`/menu/${id}?hasOneOption=true`);
-    }
-    router.push(`/menu/${id}`);
-  };
 
   return (
     <>
@@ -26,7 +19,7 @@ export default function MenuItem({ menu }: ItemPropsType) {
         const { _id, name, img_url, price, en_name, takeout } = menu;
         return (
           <li
-            onClick={() => onClickMenu(_id)}
+            onClick={() => router.push(`/menu/${_id}`)}
             key={`${name}-${_id}`}
             className="flex items-center px-3 py-4 space-x-3 border-b last:border-none border-b-gray-100"
           >

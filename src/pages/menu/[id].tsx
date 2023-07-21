@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import axios from 'axios';
 import { logout } from '@/store/slice/authSlice';
 
-export default function Detail({ menu: { detail } }: any) {
+export default function Detail({ detail }: { detail: menuType }) {
   const [count, setCount] = useState(1);
   const [isHot, setIsHot] = useState(true);
   const [oneOption, setOneOption] = useState(false);
@@ -25,8 +25,9 @@ export default function Detail({ menu: { detail } }: any) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setOneOption(!!router.query.hasOneOption);
-  }, [router.query.hasOneOption]);
+    const hasOptionCatgory = ['COFFEE', 'TEA & ADE'];
+    !hasOptionCatgory.includes(detail.category) && setOneOption(true);
+  }, [detail]);
 
   const countHandler = (e: React.MouseEvent<HTMLElement>) => {
     const isMinus = e.currentTarget.dataset['id'] === 'minus';
@@ -43,21 +44,13 @@ export default function Detail({ menu: { detail } }: any) {
   };
 
   const orderHandler = async () => {
-    let params = null;
-    if (oneOption) {
-      params = {
-        userId: localStorage.getItem('userId') as string,
-        menu: detail?.name,
-        count,
-      };
-    } else {
-      params = {
-        userId: localStorage.getItem('userId') as string,
-        menu: detail?.name,
-        isHot,
-        count,
-      };
-    }
+    const params = {
+      userId: localStorage.getItem('userId') as string,
+      menu: detail?.name,
+      isHot: oneOption ? false : isHot,
+      count,
+    };
+
     try {
       await takeOrder(params);
       router.push('/story');
@@ -188,10 +181,10 @@ export async function getStaticProps({ params }: any) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_AUTH_API_URL}/menu/${params.id}`
   );
-  const menu = await res.json();
+  const { detail } = await res.json();
   return {
     props: {
-      menu,
+      detail,
     },
   };
 }
