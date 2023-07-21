@@ -18,14 +18,23 @@ type listType = {
   createdAt: Date;
   isHot?: boolean;
 };
+
+type orderInfoType = {
+  createdAt: string;
+  orderNum: number;
+  curNum: string;
+};
+
 const Story: NextPage = ({
   orderList,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const [list, setList] = useState<null | listType[]>(null);
-  const [orderNum, setOrderNum] = useState(0);
-  const [orderDate, setOrderDate] = useState<string | null>(null);
   const [userId, setUserId] = useState('');
   const router = useRouter();
+  const [orderInfo, setOrderInfo] = useState<orderInfoType>({
+    orderNum: 0,
+    createdAt: '',
+    curNum: '',
+  });
 
   useEffect(() => {
     setUserId(localStorage.getItem('userId') ?? '');
@@ -41,10 +50,13 @@ const Story: NextPage = ({
         console.log('호출', new Date());
         const { orderList } = data.data;
         if (!orderList.length) return router.push('/menu');
-        setList(orderList);
-        const myOrder = orderList.find((el: listType) => el.userId === userId);
-        setOrderNum(myOrder.orderNum);
-        setOrderDate(myOrder.createdAt);
+        const { orderNum, createdAt } = orderList.find(
+          (el: listType) => el.userId === userId
+        );
+        const curNum = orderList.findIndex(
+          (el: listType) => el.userId === userId
+        );
+        setOrderInfo({ orderNum, createdAt, curNum });
       },
       onError: (error) => {
         console.log(error);
@@ -56,8 +68,8 @@ const Story: NextPage = ({
   return (
     <div className="bg-gray-50">
       <div className="px-4 pt-4 pb-6 mb-2 bg-white border-b border-gray-100 flex-between ">
-        <span className="font-bold">주문번호 {orderNum}</span>
-        <span className="text-sm text-gray-400">{orderDate}</span>
+        <span className="font-bold">주문번호 {orderInfo.orderNum}</span>
+        <span className="text-sm text-gray-400">{orderInfo.createdAt}</span>
       </div>
       {/* 진행상황 */}
       <div className="px-4 py-6 mb-4 bg-white border-gray-100 border-y">
@@ -90,11 +102,11 @@ const Story: NextPage = ({
       <div className="px-4 py-4 bg-white border-t border-gray-100">
         <p className="text-sm font-bold">제조 현황</p>
         <p className="mt-2 text-lg font-bold">
-          고객님의 음료가 제조 중에 있습니다.
+          고객님의 음료가 {orderInfo.curNum + 1}번째로 제조 중에 있습니다.
         </p>
-        {list && (
+        {isSuccess && data.data && (
           <ul className="flex flex-wrap mt-4">
-            {list.map((el, idx) => {
+            {data.data.orderList.map((el: listType, idx: number) => {
               const {
                 userId: menuUserId,
                 count,
@@ -103,32 +115,35 @@ const Story: NextPage = ({
                 createdAt,
               } = el;
               const isMine = menuUserId === userId;
-              return new Array(count).fill('menu').map((el, idx) => {
-                return (
-                  <li
-                    className="mt-1 mr-1 w-[calc(20%-4px)]"
-                    key={`${createdAt} ${menu} ${idx + 1}`}
+              return (
+                <li
+                  className="mt-1 mr-1 w-[calc(20%-4px)]"
+                  key={`${createdAt} ${menu} ${idx + 1}`}
+                >
+                  <div
+                    className={`w-full aspect-square h-auto bg-gray-100 rounded-2xl border-[1.5px] ${
+                      isMine ? 'border-primary' : ''
+                    } relative`}
                   >
-                    <div
-                      className={`w-full aspect-square h-auto bg-gray-100 rounded-2xl border-[1.5px] ${
-                        isMine ? 'border-primary' : ''
-                      } relative`}
-                    >
-                      {isMine && (
-                        <div className="absolute top-[-10px] bg-primary px-[6px] py-[1px] text-[10px] leading-3 rounded-xl text-white left-0">
-                          MY
-                        </div>
-                      )}
-                      <Image
-                        src={img_url}
-                        layout="fill"
-                        alt="coffee"
-                        priority={true}
-                      />
-                    </div>
-                  </li>
-                );
-              });
+                    {isMine && (
+                      <div className="absolute top-[-10px] bg-primary px-[6px] py-[2px] text-[10px] leading-3 rounded-xl text-white left-0">
+                        MY
+                      </div>
+                    )}
+                    <Image
+                      src={img_url}
+                      layout="fill"
+                      alt="coffee"
+                      priority={true}
+                    />
+                    {count > 1 && (
+                      <div className="absolute -bottom-1 font-semibold bg-primary p-1 text-[10px] leading-3 rounded-full text-white -right-1">
+                        {count}개
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
             })}
           </ul>
         )}
