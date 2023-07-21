@@ -194,7 +194,8 @@ const Home = () => {
         </p>
         <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
           <Image
-            src="/image/greeting.gif"
+            // src="/image/greeting.gif"
+            src="/image/cafe.png"
             alt="banapresso"
             sizes="100%"
             priority={true}
