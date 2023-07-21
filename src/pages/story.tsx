@@ -8,6 +8,7 @@ import {
 import Image from 'next/image';
 import { getOrderList } from '@/lib/api/menu';
 import { useQuery } from '@tanstack/react-query';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 type listType = {
   name: string;
@@ -100,7 +101,19 @@ const Story: NextPage = ({
       </div>
       {/* 제조 현황 */}
       <div className="px-4 py-4 bg-white border-t border-gray-100">
-        <p className="text-sm font-bold">제조 현황</p>
+        <div className="flex items-center space-x-2">
+          <p className="text-sm font-bold" data-tooltip-id="my-tooltip">
+            제조 현황
+          </p>
+          <div
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="나의 주문 순서를 확인할 수 있어요!"
+            className="w-4 h-4 text-xs border rounded-full text-bold text-primary border-primary flex-center"
+          >
+            !
+          </div>
+          <ReactTooltip id="my-tooltip" />
+        </div>
         <p className="mt-2 text-lg font-bold">
           고객님의 음료가 {orderInfo.curNum + 1}번째로 제조 중에 있습니다.
         </p>
