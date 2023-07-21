@@ -31,14 +31,14 @@ export default function Footer() {
           <p>홈</p>
         </div>
       </Link>
-      <Link href="/membership">
+      <Link href="/mypage">
         <div
           className={`menu-item ${
-            pathname === '/membership' ? 'active' : 'unactive'
+            pathname === '/mypage' ? 'active' : 'unactive'
           }`}
         >
           <BsFillPersonFill size="20" />
-          <p>멤버쉽</p>
+          <p>내정보</p>
         </div>
       </Link>
       <Link href="/menu" className="relative">

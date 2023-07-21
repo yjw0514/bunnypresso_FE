@@ -34,7 +34,7 @@ export default function BasicButton({
   return (
     <button
       onClick={onClick}
-      className={`${STYLE[utilType]} ${className} ${SIZE[size]} text-sm font-semibold border rounded-md disabled:border-gray-300 disabled:bg-gray-200`}
+      className={`${STYLE[utilType]} ${className} ${SIZE[size]} text-sm font-semibold border rounded-md disabled:border-gray-300 disabled:bg-gray-200 focus:outline-none`}
       {...rest}
     >
       {name}

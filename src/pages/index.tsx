@@ -159,9 +159,14 @@ const Home = () => {
     <div className="h-screen wrapper">
       {isLoggedIn && (
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-lg flex-center bg-[#dbdbdb]">
+          {/* <div className="w-14 h-14 rounded-lg flex-center bg-[#dbdbdb]">
             <BsFillPersonFill size="34" color="#F3F3F3" />
-          </div>
+          </div> */}
+          <img
+            className=" w-14 h-14"
+            src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+            alt="profile-image"
+          />
           <div className="font-semibold text-black text-md">
             <p>
               {name}님, <br />
