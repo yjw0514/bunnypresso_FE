@@ -1,4 +1,4 @@
-import OrderList from '@/components/Order/orderList';
+import OrderHistory from '@/components/Order/OrderHistory';
 import { useEffect, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 
@@ -31,7 +31,7 @@ export default function MyPage() {
             </button>
           </div>
         </div>
-        <OrderList />
+        <OrderHistory />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-export default function OrderList() {
+export default function OrderHistory() {
   return (
     <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg shadow">
       <div className="flex items-center justify-between mb-4">
