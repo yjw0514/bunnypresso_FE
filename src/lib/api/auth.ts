@@ -17,5 +17,9 @@ export const refreshChk = (refreshToken: string) => {
   return instance.post('/refresh', { refreshToken });
 };
 
-const AuthApi = { signIn, signUp };
+export const updateProfile = ({ name }: { name: string }) => {
+  return instance.patch('/update-profile', { name });
+};
+
+const AuthApi = { signIn, signUp, updateProfile, refreshChk };
 export default AuthApi;
