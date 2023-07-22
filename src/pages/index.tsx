@@ -89,9 +89,9 @@ const Home = () => {
       //   console.log('onMutate -> login');
       // },
       onSuccess: ({ data }, variables, context) => {
-        const { userId } = data;
-        // setCookie('accessToken', accessToken);
-        // setCookie('refreshToken', refreshToken);
+        const { accessToken, refreshToken, userId } = data;
+        setCookie('accessToken', accessToken);
+        setCookie('refreshToken', refreshToken);
         if (!getCookie('accessToken') || !getCookie('refreshToken')) {
           closeLogin();
           dispatch(logout());
