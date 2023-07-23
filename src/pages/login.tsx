@@ -112,7 +112,7 @@ export default function Login() {
             />
           </div>
 
-          <FullButton name="로그인" />
+          <FullButton name="로그인" disabled={isLoginLoading} />
           <div className="flex justify-end">
             <button
               className="mt-4 text-gray-700 underline underline-offset-4 hover:"
