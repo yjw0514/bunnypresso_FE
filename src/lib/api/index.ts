@@ -18,7 +18,6 @@ instance.interceptors.request.use(
     if (req.headers && accessToken) {
       req.headers.Authorization = `Bearer ${accessToken}`;
     }
-
     // 헤더에 토큰 세팅
 
     return req;
