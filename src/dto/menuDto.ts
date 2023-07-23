@@ -9,10 +9,3 @@ export type menuType = {
   category: string;
   img_name: string;
 };
-
-export type orderType = {
-  userId?: string;
-  menu?: string;
-  isHot?: boolean;
-  count: number;
-};
