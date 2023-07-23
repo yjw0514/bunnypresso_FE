@@ -58,8 +58,7 @@ export default function Profile() {
     setEditMode(false);
     setChangedName(false);
     try {
-      const res = await updateProfile({ name: newName });
-      console.log(res);
+      await updateProfile({ name: newName });
       localStorage.setItem('name', newName);
     } catch (err) {
       console.log(err);

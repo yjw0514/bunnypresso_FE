@@ -17,7 +17,7 @@ const withAuth = (Component: NextPage | React.FC) => {
       isAuth = !!accessToken && !!name;
       if (!isAuth) {
         dispatch(logout());
-        router.replace(`/?type=login`);
+        router.push('/login');
         return;
       }
     }, [router]);

@@ -58,14 +58,14 @@ export default function Detail({ detail }: { detail: menuType }) {
       console.log('order error', err);
       if (axios.isAxiosError(err) && err.response?.status === 401) {
         dispatch(logout());
-        return router.replace(`/?type=login`);
+        return router.push('/login');
       }
     }
   };
 
   const openOrderModal = () => {
     if (!isLoggedIn) {
-      return router.replace(`/?type=login`);
+      return router.push('/login');
     }
     openModal();
   };

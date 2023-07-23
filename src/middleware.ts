@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
     const refreshToken = request.cookies.get('refreshToken');
     if (!accessToken || !refreshToken) {
       console.log('미들웨어 체크 : 로그인 필요함');
-      return NextResponse.redirect(new URL('/?type=login', request.url));
+      return NextResponse.redirect(new URL('/login', request.url));
     }
   }
 }

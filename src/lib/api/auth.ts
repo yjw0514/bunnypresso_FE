@@ -2,12 +2,17 @@ import { LoginValue } from '@/dto/loginDto';
 import { SignUpValue } from '@/dto/signupDto';
 import { instance } from '@/lib/api/index';
 
-export const signIn = ({ name, password }: LoginValue) => {
-  return instance.post('/login', { name, password }, { withCredentials: true });
+export const signIn = ({ email, password }: LoginValue) => {
+  return instance.post(
+    '/login',
+    { email, password },
+    { withCredentials: true }
+  );
 };
 
-export const signUp = ({ name, password }: SignUpValue) => {
+export const signUp = ({ email, name, password }: SignUpValue) => {
   return instance.post('/signup', {
+    email,
     name,
     password,
   });
