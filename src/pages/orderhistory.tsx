@@ -27,9 +27,12 @@ export default function OrderHistory() {
           className="flex flex-col space-y-4 divide-y divide-gray-200"
         >
           {isSuccess &&
-            data.data.list.map((item: historyItemType) => {
+            data.data.list.map((item: historyItemType, idx: number) => {
               return (
-                <li className="w-full px-4 py-6 mx-auto border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max">
+                <li
+                  key={`${item.menu}-${item._id}-${idx}`}
+                  className="w-full px-4 py-6 mx-auto border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max"
+                >
                   <div className="flex items-end space-x-4">
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-gray-900 truncate text-md">
