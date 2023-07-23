@@ -108,7 +108,7 @@ export default function SignUp() {
             />
           </div>
 
-          <FullButton name="회원가입" />
+          <FullButton name="회원가입" disabled={signUpLoading} />
           <div className="flex justify-end">
             <button
               className="mt-4 text-gray-700 underline underline-offset-4 hover:"

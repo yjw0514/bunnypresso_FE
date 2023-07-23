@@ -1,4 +1,4 @@
-import OrderHistory from '@/components/MyPage/OrderHistory';
+import OrderList from '@/components/MyPage/OrderList';
 import Profile from '@/components/MyPage/Profile';
 
 export default function MyPage() {
@@ -11,10 +11,8 @@ export default function MyPage() {
       <div className="fixed top-0 bottom-0 left-0 right-0 z-40 bg-white/90 flex-center"></div> */}
 
       <h2 className="my-4 font-semibold">내 정보</h2>
-      <div className="flex flex-col items-center mt-6 space-y-10">
-        <Profile />
-        <OrderHistory />
-      </div>
+      <Profile />
+      <OrderList />
     </div>
   );
 }

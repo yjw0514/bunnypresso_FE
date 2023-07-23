@@ -1,4 +1,4 @@
-import { orderType } from '@/dto/menuDto';
+import { orderType } from '@/dto/orderDto';
 import { instance } from '@/lib/api/index';
 
 // 메뉴 목록

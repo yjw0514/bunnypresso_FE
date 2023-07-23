@@ -62,11 +62,12 @@ const Home = () => {
 
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
-          <IconButton onClick={openLogout}>
-            <FiLogOut size="20px" />
-          </IconButton>
+          // <IconButton onClick={openLogout}>
+          //   <FiLogOut size="20px" />
+          // </IconButton>
+          <BasicButton name="로그아웃" onClick={openLogout} />
         ) : (
-          <BasicButton name="LogIn" onClick={() => router.push('/login')} />
+          <BasicButton name="로그인" onClick={() => router.push('/login')} />
         )}
       </div>
 
