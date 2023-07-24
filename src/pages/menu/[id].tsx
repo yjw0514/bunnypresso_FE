@@ -19,6 +19,7 @@ export default function Detail({ detail }: { detail: menuType }) {
   const [count, setCount] = useState(1);
   const [isHot, setIsHot] = useState(true);
   const [oneOption, setOneOption] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();
   const router = useRouter();
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
@@ -44,6 +45,7 @@ export default function Detail({ detail }: { detail: menuType }) {
   };
 
   const orderHandler = async () => {
+    setIsLoading(true);
     const params = {
       userId: localStorage.getItem('userId') as string,
       menu: detail?.name,
@@ -53,8 +55,10 @@ export default function Detail({ detail }: { detail: menuType }) {
 
     try {
       await takeOrder(params);
+      setIsLoading(false);
       router.push('/story');
     } catch (err) {
+      setIsLoading(false);
       console.log('order error', err);
       if (axios.isAxiosError(err) && err.response?.status === 401) {
         dispatch(logout());
@@ -141,7 +145,7 @@ export default function Detail({ detail }: { detail: menuType }) {
             </div>
             <BasicButton
               utilType="fill"
-              className="!px-3 !py-2 !mt-10 !rounded-3xl"
+              className="!px-3 !py-2 !mt-10 "
               name="바로 주문하기"
               onClick={openOrderModal}
             />
@@ -154,6 +158,7 @@ export default function Detail({ detail }: { detail: menuType }) {
           isOpen={isOpen}
           closeModal={closeModal}
           onConfirm={orderHandler}
+          disabled={isLoading}
         >
           <div className="text-center">
             <span className="font-bold text-md text-primary">
