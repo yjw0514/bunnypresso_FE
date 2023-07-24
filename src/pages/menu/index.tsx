@@ -79,7 +79,7 @@ const Menu: NextPage = ({
             </ul>
           </div>
         </div>
-        {isOpen && (
+        {isOpen ? (
           <BasicModal
             isOpen={isOpen}
             closeModal={closeModal}
@@ -92,12 +92,12 @@ const Menu: NextPage = ({
               주문 후 이용해주세요.
             </div>
           </BasicModal>
-        )}
-        {fromSearch && (
+        ) : null}
+        {fromSearch ? (
           <FullModal closeModal={searchPopupHandler}>
             <SearchPopup closeModal={searchPopupHandler} />
           </FullModal>
-        )}
+        ) : null}
       </div>
     </>
   );

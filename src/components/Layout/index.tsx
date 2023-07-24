@@ -21,7 +21,7 @@ export default function PageLayout({
   return (
     <div>
       {children}
-      {pathname !== '/menu/[id]' && <Footer />}
+      {pathname !== '/menu/[id]' ? <Footer /> : null}
     </div>
   );
 }

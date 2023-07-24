@@ -24,9 +24,9 @@ const BasicInput = React.forwardRef(function BasicInput(
         `}
         {...rest}
       />
-      {isError && (
+      {isError ? (
         <p className="pl-1 mt-1 text-xs text-red-500 error-msg">{errorMsg}</p>
-      )}
+      ) : null}
     </div>
   );
 });

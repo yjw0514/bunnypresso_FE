@@ -31,7 +31,7 @@ export default function OrderList() {
         <h5 className="text-xl font-bold leading-none text-gray-900 ">
           나의 주문내역
         </h5>
-        {data?.data.list.length > 1 && (
+        {data?.data.list.length > 1 ? (
           <button
             className="space-x-1 flex-center"
             onClick={() => router.push('/orderhistory')}
@@ -39,11 +39,11 @@ export default function OrderList() {
             <p>더보기</p>
             <MdKeyboardArrowRight />
           </button>
-        )}
+        ) : null}
       </div>
       <div className="w-full max-w-md py-6 border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max">
-        {isSuccess &&
-          (history ? (
+        {isSuccess ? (
+          history ? (
             <div className="w-full h-ful">
               <ul role="list" className="divide-y divide-gray-200">
                 <li className="p-3 px-6">
@@ -75,7 +75,8 @@ export default function OrderList() {
                 />
               </div>
             </div>
-          ))}
+          )
+        ) : null}
       </div>
     </section>
   );

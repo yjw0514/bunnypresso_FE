@@ -26,7 +26,7 @@ export default function Detail({ detail }: { detail: menuType }) {
 
   useEffect(() => {
     const hasOptionCatgory = ['COFFEE', 'TEA & ADE'];
-    !hasOptionCatgory.includes(detail.category) && setOneOption(true);
+    if (!hasOptionCatgory.includes(detail.category)) setOneOption(true);
   }, [detail]);
 
   const countHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -74,7 +74,7 @@ export default function Detail({ detail }: { detail: menuType }) {
     <>
       <DetailHeader />
       <div className="mt-[30px]" style={{ height: 'calc(100vh - 52px)' }}>
-        {detail && (
+        {detail ? (
           <div className="flex flex-col items-center justify-center h-full mx-5 space-y-6">
             <Image
               src={detail?.img_url}
@@ -120,7 +120,7 @@ export default function Detail({ detail }: { detail: menuType }) {
                   </button>
                 </div>
               </div>
-              {!oneOption && (
+              {!oneOption ? (
                 <div className="flex justify-center mt-4 space-x-2">
                   <button
                     onClick={temperatureHandler}
@@ -137,7 +137,7 @@ export default function Detail({ detail }: { detail: menuType }) {
                     Ice
                   </button>
                 </div>
-              )}
+              ) : null}
             </div>
             <BasicButton
               utilType="fill"
@@ -146,9 +146,9 @@ export default function Detail({ detail }: { detail: menuType }) {
               onClick={openOrderModal}
             />
           </div>
-        )}
+        ) : null}
       </div>
-      {isOpen && (
+      {isOpen ? (
         <BasicModal
           title="주문 확인"
           isOpen={isOpen}
@@ -160,11 +160,11 @@ export default function Detail({ detail }: { detail: menuType }) {
               {detail?.name}&nbsp;
               {count}잔
             </span>
-            {!oneOption && <span>({isHot ? 'Hot' : 'Ice'})</span>}
+            {!oneOption ? <span>({isHot ? 'Hot' : 'Ice'})</span> : null}
             <p className="mt-1">선택하신 음료를 주문하시겠습니까?</p>
           </div>
         </BasicModal>
-      )}
+      ) : null}
     </>
   );
 }
