@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <div className="h-screen wrapper">
-      {isLoggedIn && (
+      {isLoggedIn ? (
         <div className="flex items-center gap-4">
           <img
             className=" w-14 h-14"
@@ -58,7 +58,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className="fixed top-4 right-4">
         {isLoggedIn ? (
@@ -88,7 +88,7 @@ const Home = () => {
         </div>
       </div>
 
-      {isOpenLogout && (
+      {isOpenLogout ? (
         <BasicModal
           isOpen={isOpenLogout}
           closeModal={closeLogout}
@@ -97,7 +97,7 @@ const Home = () => {
         >
           <div>로그아웃하시겠습니까?</div>
         </BasicModal>
-      )}
+      ) : null}
     </div>
   );
 };

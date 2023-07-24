@@ -138,22 +138,22 @@ const Story: NextPage = ({
                       isMine ? 'border-primary' : ''
                     } relative`}
                   >
-                    {isMine && (
+                    {isMine ? (
                       <div className="absolute top-[-10px] bg-primary px-[6px] py-[2px] text-[10px] leading-3 rounded-xl text-white left-0">
                         MY
                       </div>
-                    )}
+                    ) : null}
                     <Image
                       src={img_url}
                       layout="fill"
                       alt="coffee"
                       priority={true}
                     />
-                    {count > 1 && (
+                    {count > 1 ? (
                       <div className="absolute -bottom-1 font-semibold bg-primary p-1 text-[10px] leading-3 rounded-full text-white -right-1">
                         {count}개
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </li>
               );

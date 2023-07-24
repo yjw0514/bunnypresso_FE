@@ -68,12 +68,12 @@ export default function Login() {
       <section className="w-full max-w-md max-h-max">
         <h3 className="mb-10 text-3xl font-bold text-center">로그인</h3>
         <form className="w-full" onSubmit={handleSubmit(loginHandler)}>
-          {isSignupSuccess && (
+          {isSignupSuccess ? (
             <div className="mb-4 text-center text-md text-primary">
               회원가입이 완료되었습니다.
               <br /> 로그인을 해주세요.
             </div>
-          )}
+          ) : null}
           <div className="mb-6">
             <label
               htmlFor="email"
