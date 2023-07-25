@@ -16,7 +16,7 @@ export default function MainBanner() {
   };
 
   return (
-    <section className="flex flex-col mt-10 space-y-4 h-3/4">
+    <section className="flex flex-col mt-10 space-y-5 h-3/4">
       <p className="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-primary">
         Welcome to <br />
         BunnyPresso
@@ -24,7 +24,7 @@ export default function MainBanner() {
       </p>
       <Slider
         {...bannerSettings}
-        className="w-10/12 max-h-[500px] max-w-md mx-auto"
+        className="w-11/12 max-h-[500px] max-w-md mx-auto"
       >
         {new Array(3).fill(null).map((item, idx) => {
           return (
