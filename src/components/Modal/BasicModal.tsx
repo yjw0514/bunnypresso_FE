@@ -36,11 +36,11 @@ export default function BasicModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 top-0 bottom-0 right-0 max-w-md bg-black bg-opacity-25 lef-0" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-full p-8 text-center">
+          <div className="fixed inset-0 overflow-y-auto ">
+            <div className="top-0 bottom-0 right-0 flex items-center justify-center max-w-md min-h-full p-8 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -50,7 +50,7 @@ export default function BasicModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md p-4 flex flex-col justify-between overflow-hidden min-h-[200px] text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
+                <Dialog.Panel className="w-full  max-w-sm p-4 flex flex-col justify-between overflow-hidden min-h-[200px] text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-semibold leading-6 text-center text-primary"

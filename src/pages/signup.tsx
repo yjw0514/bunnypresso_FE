@@ -51,8 +51,8 @@ export default function SignUp() {
   };
 
   return (
-    <div className="h-screen p-3 flex-center">
-      <section className="w-full max-w-md max-h-max">
+    <div className="h-screen p-4 flex-center">
+      <section className="w-full max-w-sm max-h-max">
         <h3 className="mb-10 text-3xl font-bold text-center">회원가입</h3>
         <form className="w-full" onSubmit={handleSubmit(signUpHandler)}>
           <div className="mb-6">

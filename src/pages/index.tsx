@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import BasicButton from '@/components/Button/BasicButton';
-import IconButton from '@/components/Button/IconButton';
 import BasicModal from '@/components/Modal/BasicModal';
+import MainBanner from '@/components/Home/MainBanner';
 
 import useModal from '@/hooks/useModal';
-import { FiLogOut } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slice/authSlice';
@@ -43,61 +41,59 @@ const Home = () => {
   }, [getCookie('accessToken')]);
 
   return (
-    <div className="h-screen wrapper">
-      {isLoggedIn ? (
-        <div className="flex items-center gap-4">
-          <img
-            className=" w-14 h-14"
-            src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-            alt="profile-image"
-          />
-          <div className="font-semibold text-black text-md">
-            <p>
-              {name}님, <br />
-              안녕하세요!
-            </p>
+    <div className="h-screen pb-24 overflow-scroll bg-gray-100 wrapper scrollbar-hide">
+      <div>
+        {isLoggedIn ? (
+          <div className="flex items-center gap-4">
+            <img
+              className=" w-14 h-14"
+              src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+              alt="profile-image"
+            />
+            <div className="font-semibold text-black text-md">
+              <p>
+                {name}님, <br />
+                안녕하세요!
+              </p>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="fixed top-0 left-0 right-0 max-w-md pt-4 pr-4">
+          <div className="flex justify-end ">
+            {isLoggedIn ? (
+              <BasicButton name="로그아웃" onClick={openLogout} />
+            ) : (
+              <BasicButton
+                name="로그인"
+                onClick={() => router.push('/login')}
+              />
+            )}
           </div>
         </div>
-      ) : null}
+        {/* <div className="relative w-3/4 max-w-sm mt-8 h-3/4"> */}
+        {/* <Image
+          src="/image/banner/banner1.jpg"
+          alt="banner"
+          sizes="100%"
+          priority={true}
+          layout="fill"
+          className="rounded-lg"
+        /> */}
+        {/* </div> */}
+        <MainBanner />
 
-      <div className="fixed top-4 right-4">
-        {isLoggedIn ? (
-          // <IconButton onClick={openLogout}>
-          //   <FiLogOut size="20px" />
-          // </IconButton>
-          <BasicButton name="로그아웃" onClick={openLogout} />
-        ) : (
-          <BasicButton name="로그인" onClick={() => router.push('/login')} />
-        )}
+        {isOpenLogout ? (
+          <BasicModal
+            isOpen={isOpenLogout}
+            closeModal={closeLogout}
+            onConfirm={onLogout}
+            title="로그아웃"
+          >
+            <div>로그아웃하시겠습니까?</div>
+          </BasicModal>
+        ) : null}
       </div>
-
-      <div className="w-full">
-        <p className="bg-clip-text bg-gradient-to-r from-pink-200 to-primary text-3xl mt-[4rem] font-bold text-transparent text-center ">
-          Welcome to <br />
-          BunnyPresso
-          <br />
-        </p>
-        <div className="relative w-3/4 max-w-sm mx-auto mt-8 aspect-square">
-          <Image
-            src="/image/greeting.gif"
-            alt="banapresso"
-            sizes="100%"
-            priority={true}
-            layout="fill"
-          />
-        </div>
-      </div>
-
-      {isOpenLogout ? (
-        <BasicModal
-          isOpen={isOpenLogout}
-          closeModal={closeLogout}
-          onConfirm={onLogout}
-          title="로그아웃"
-        >
-          <div>로그아웃하시겠습니까?</div>
-        </BasicModal>
-      ) : null}
     </div>
   );
 };

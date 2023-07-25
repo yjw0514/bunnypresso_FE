@@ -1,19 +1,7 @@
-import Image from 'next/image';
+import { ClipLoader } from 'react-spinners';
 
 const Loading = () => {
-  return (
-    <div className="pt-[40%] ">
-      <div className="relative w-1/2 mx-auto aspect-square">
-        <Image
-          src="https://banapresso.com/mo/static/media/img_map_loading.c5d15d46f6c2396432fa.gif"
-          alt="loading"
-          sizes="100%"
-          priority={true}
-          layout="fill"
-        />
-      </div>
-    </div>
-  );
+  return <ClipLoader size={50} color="pink" />;
 };
 
 export default Loading;
