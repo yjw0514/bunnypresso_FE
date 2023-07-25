@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import BasicButton from '@/components/Button/BasicButton';
 import BasicModal from '@/components/Modal/BasicModal';
+import MainBanner from '@/components/Home/MainBanner';
 
 import useModal from '@/hooks/useModal';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { logout } from '@/store/slice/authSlice';
 import { getCookie } from '@/utils/cookies';
-
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const Home = () => {
   const [name, setName] = useState<string | null>(null);
@@ -43,17 +39,6 @@ const Home = () => {
       dispatch(logout());
     }
   }, [getCookie('accessToken')]);
-
-  const bannerSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    arrows: false,
-  };
 
   return (
     <div className="h-screen pb-24 overflow-scroll bg-gray-100 wrapper scrollbar-hide">
@@ -91,29 +76,7 @@ const Home = () => {
           className="rounded-lg"
         /> */}
         {/* </div> */}
-        <section className="flex flex-col mt-10 space-y-4 h-3/4">
-          <p className="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-primary">
-            Welcome to <br />
-            BunnyPresso
-            <br />
-          </p>
-          <Slider
-            {...bannerSettings}
-            className="w-10/12 max-h-[500px] max-w-md mx-auto"
-          >
-            {new Array(3).fill(null).map((item, idx) => {
-              return (
-                <div className="w-full rounded-lg" key={`banner-${idx}`}>
-                  <img
-                    src={`/image/banner${idx + 1}.jpg`}
-                    alt="banner"
-                    className="w-full h-full rounded-lg shadow-md"
-                  />
-                </div>
-              );
-            })}
-          </Slider>
-        </section>
+        <MainBanner />
 
         {isOpenLogout ? (
           <BasicModal
