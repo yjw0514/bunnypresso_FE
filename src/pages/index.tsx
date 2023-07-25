@@ -59,12 +59,17 @@ const Home = () => {
           </div>
         ) : null}
 
-        <div className="fixed top-4 right-4">
-          {isLoggedIn ? (
-            <BasicButton name="로그아웃" onClick={openLogout} />
-          ) : (
-            <BasicButton name="로그인" onClick={() => router.push('/login')} />
-          )}
+        <div className="fixed top-0 left-0 right-0 max-w-md pt-4 pr-4">
+          <div className="flex justify-end ">
+            {isLoggedIn ? (
+              <BasicButton name="로그아웃" onClick={openLogout} />
+            ) : (
+              <BasicButton
+                name="로그인"
+                onClick={() => router.push('/login')}
+              />
+            )}
+          </div>
         </div>
         {/* <div className="relative w-3/4 max-w-sm mt-8 h-3/4"> */}
         {/* <Image

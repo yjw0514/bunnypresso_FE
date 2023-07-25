@@ -65,7 +65,7 @@ export default function Login() {
 
   return (
     <div className="h-screen p-3 flex-center">
-      <section className="w-full max-w-md max-h-max">
+      <section className="w-full max-w-sm max-h-max">
         <h3 className="mb-10 text-3xl font-bold text-center">로그인</h3>
         <form className="w-full" onSubmit={handleSubmit(loginHandler)}>
           {isSignupSuccess ? (

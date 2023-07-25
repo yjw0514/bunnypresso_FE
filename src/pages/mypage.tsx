@@ -10,7 +10,7 @@ export default function MyPage() {
       </p>
       <div className="fixed top-0 bottom-0 left-0 right-0 z-40 bg-white/90 flex-center"></div> */}
 
-      <h2 className="my-4 font-semibold">내 정보</h2>
+      <h2 className="py-4 font-semibold">내 정보</h2>
       <Profile />
       <OrderList />
     </div>

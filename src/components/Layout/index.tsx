@@ -19,7 +19,7 @@ export default function PageLayout({
     }
   }, []);
   return (
-    <div>
+    <div className="fixed top-0 bottom-0 left-0 right-0 max-w-md bg-gray-100">
       {children}
       {pathname !== '/menu/[id]' ? <Footer /> : null}
     </div>

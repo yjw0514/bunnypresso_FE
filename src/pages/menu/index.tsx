@@ -42,7 +42,7 @@ const Menu: NextPage = ({
   };
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 w-full px-3 pt-3 pb-4 flex-between">
+      <div className="fixed top-0 left-0 right-0 w-full max-w-md px-3 pt-3 pb-4 flex-between">
         <h2 className="font-semibold">주문</h2>
         <FiSearch onClick={searchPopupHandler} />
       </div>

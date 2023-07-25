@@ -18,7 +18,7 @@ export default function Footer() {
     }, 3000);
   }, []);
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex px-4 py-2 bg-white border border-gray-100 rounded-t-xl flex-between">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex max-w-md px-4 py-2 bg-white border border-gray-100 rounded-t-xl flex-between">
       <Link href="/">
         <div
           className={`menu-item ${pathname === '/' ? 'active' : 'unactive'}`}
@@ -59,8 +59,20 @@ export default function Footer() {
               <p>주문</p>
             </div>
           ) : (
+            // <div className="fixed left-0 right-0 max-w-md bottom-3">
+            //   <div
+            //     className={`absolute bottom-0 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.4rem] h-[3.4rem] rounded-full menu-item ${
+            //       pathname === '/menu' ? 'active' : 'unactive'
+            //     }`}
+            //   >
+            //     <div className="gap-1 flex-col-center">
+            //       <BsPhoneVibrate size="20" />
+            //       <p>주문</p>
+            //     </div>
+            //   </div>
+            // </div>
             <div
-              className={`fixed bottom-3 left-1/2 translate-x-[-50%] bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.4rem] h-[3.4rem] rounded-full menu-item ${
+              className={`absolute bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-pink-300 to-primary shadow-md text-white w-[3.4rem] h-[3.4rem] rounded-full menu-item ${
                 pathname === '/menu' ? 'active' : 'unactive'
               }`}
             >
