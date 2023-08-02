@@ -71,13 +71,22 @@ export default function Profile() {
   };
   return (
     <div className="flex flex-col items-center space-y-3">
-      <div className="relative mb-6 rounded-full w-36 h-36">
-        <img
-          className="absolute top-0 bottom-0 left-0 right-0 w-full h-full"
-          src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-          alt=""
-          onClick={profileHandler}
-        />
+      <div className="relative mb-6 border border-gray-100 rounded-full shadow-sm w-36 h-36">
+        {profile ? (
+          <img
+            className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+            src={profile}
+            alt="profile"
+            onClick={profileHandler}
+          />
+        ) : (
+          <img
+            className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+            src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+            alt="defatulProfile"
+            onClick={profileHandler}
+          />
+        )}
         <input
           type="file"
           src={profile}
