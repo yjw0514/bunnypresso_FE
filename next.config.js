@@ -13,7 +13,6 @@ const nextConfig = {
         hostname: 'www.banapresso.com',
       },
     ],
-    domains: ['bunnypresso.s3.ap-northeast-2.amazonaws.com'],
   },
 };
 
