@@ -23,7 +23,7 @@ export default function MenuItem({ menu }: ItemPropsType) {
             key={`${name}-${_id}`}
             className="flex items-center px-3 py-4 space-x-3 border-b last:border-none border-b-gray-100"
           >
-            <div className="w-[78px] h-[78px] bg-gray-100 rounded-3xl border border-gray-200 relative">
+            <div className="w-[78px] h-[78px]  rounded-3xl border border-gray-200 relative">
               <Image
                 src={img_url}
                 layout="fill"
