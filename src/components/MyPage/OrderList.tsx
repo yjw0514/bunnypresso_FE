@@ -44,7 +44,7 @@ export default function OrderList() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="w-full max-w-md py-6 border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max">
+        <div className="w-full max-w-md py-6 bg-white border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max">
           {isSuccess ? (
             history ? (
               <div className="w-full h-ful">
