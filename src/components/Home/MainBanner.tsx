@@ -24,13 +24,13 @@ export default function MainBanner() {
       </p>
       <Slider
         {...bannerSettings}
-        className="w-11/12 max-h-[500px] max-w-md mx-auto"
+        className="w-4/5 max-h-[500px] max-w-md mx-auto"
       >
         {new Array(3).fill(null).map((item, idx) => {
           return (
             <div className="w-full rounded-lg" key={`banner-${idx}`}>
               <img
-                src={`/image/banner${idx + 1}.jpg`}
+                src={`${process.env.NEXT_PUBLIC_IMG_URL}/banner${idx + 1}.jpg`}
                 alt="banner"
                 className="w-full h-full rounded-lg shadow-md"
               />
