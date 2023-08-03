@@ -37,9 +37,10 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const errorConfig = error.config;
-    console.log('error response : ', error.response.data);
-    if (error.response.status === 401) {
-      if (error.response.data.message === 'token expired') {
+    const { status, data } = error.response;
+    console.log('error response : ', data);
+    if (status === 401) {
+      if (data.message === 'token expired') {
         // 권한없음. 엑세스 토큰 만료
         const refreshToken = getCookie('refreshToken');
         try {
@@ -52,10 +53,14 @@ instance.interceptors.response.use(
           console.log(err);
         }
       } else {
-        console.log('error', error.response);
+        console.log('error', data);
         removeCookie('accessToken');
         removeCookie('refreshToken');
         localStorage.clear();
+        if (data.message === '토큰이 없습니다.') {
+          // 로그인페이지로 리다이렉트
+          window.location.href = '/logn';
+        }
       }
     }
 
