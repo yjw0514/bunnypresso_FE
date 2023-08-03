@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  console.log(request);
   if (
     request.nextUrl.pathname.startsWith('/story') ||
     request.nextUrl.pathname.startsWith('/mypage')
