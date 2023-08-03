@@ -57,10 +57,10 @@ instance.interceptors.response.use(
         removeCookie('accessToken');
         removeCookie('refreshToken');
         localStorage.clear();
-        if (data.message === '토큰이 없습니다.') {
-          // 로그인페이지로 리다이렉트
-          window.location.href = '/logn';
-        }
+        // if (data.message === '토큰이 없습니다.') {
+        //   // 로그인페이지로 리다이렉트
+        //   window.location.href = '/logn';
+        // }
       }
     }
 
