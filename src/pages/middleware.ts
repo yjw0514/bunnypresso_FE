@@ -17,6 +17,6 @@ export function middleware(request: NextRequest) {
   }
 }
 
-// export const config = {
-//   matcher: ['/story', '/mypage'],
-// };
+export const config = {
+  matcher: ['/story', '/mypage'],
+};
