@@ -1,16 +1,17 @@
 import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import BasicInput from '@/components/Input/BasicInput';
-import { LoginValue } from '@/dto/loginDto';
-import { signIn } from '@/lib/api/auth';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { isSignUp, login, logout } from '@/store/slice/authSlice';
-import { getCookie, setCookie } from '@/utils/cookies';
-import { loginSchema } from '@/utils/schema';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { isSignUp, login, logout } from '@/store/slice/authSlice';
+import BasicInput from '@/components/Input/BasicInput';
 import FullButton from '@/components/Button/FullButton';
+import { signIn } from '@/lib/api/auth';
+import { getCookie, setCookie } from '@/utils/cookies';
+import { loginSchema } from '@/utils/schema';
+import { LoginValue } from '@/dto/loginDto';
+import { CustomLoginError } from '@/dto/errorDto';
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -21,8 +22,7 @@ export default function Login() {
     handleSubmit,
     setError,
     reset,
-    formState,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<LoginValue>({
     resolver: yupResolver(loginSchema),
   });
@@ -47,13 +47,14 @@ export default function Login() {
         router.push('/');
       },
 
-      // TODO: error 타입 해결
-      onError: (error: any, variable, context) => {
-        const { type, message } = error.response.data;
-        setError(type, {
-          type,
-          message,
-        });
+      onError: (error: CustomLoginError) => {
+        if (error.response) {
+          const { type, message } = error.response.data;
+          setError(type, {
+            type,
+            message,
+          });
+        }
       },
     }
   );
