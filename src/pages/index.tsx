@@ -72,16 +72,6 @@ const Home = () => {
             )}
           </div>
         </div>
-        {/* <div className="relative w-3/4 max-w-sm mt-8 h-3/4"> */}
-        {/* <Image
-          src="/image/banner/banner1.jpg"
-          alt="banner"
-          sizes="100%"
-          priority={true}
-          layout="fill"
-          className="rounded-lg"
-        /> */}
-        {/* </div> */}
         <MainBanner />
 
         {isOpenLogout ? (
