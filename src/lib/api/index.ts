@@ -37,7 +37,7 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const errorConfig = error.config;
-    console.log('error response : ', error.response.status);
+    console.log('error response : ', error.response.data);
     if (error.response.status === 401) {
       if (error.response.data.message === 'token expired') {
         // 권한없음. 엑세스 토큰 만료
