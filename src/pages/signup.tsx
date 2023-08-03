@@ -1,15 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
 import FullButton from '@/components/Button/FullButton';
 import BasicInput from '@/components/Input/BasicInput';
 import { SignUpValue } from '@/dto/signupDto';
 import { signUp } from '@/lib/api/auth';
 import { SignUpSchema } from '@/utils/schema';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useMutation } from '@tanstack/react-query';
 import { useAppDispatch } from '@/store/hooks';
 import { isSignUp } from '@/store/slice/authSlice';
+import { CustomSignupError } from '@/dto/errorDto';
 
 export default function SignUp() {
   const router = useRouter();
@@ -19,8 +20,7 @@ export default function SignUp() {
     handleSubmit,
     setError,
     reset,
-    formState,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<SignUpValue>({
     resolver: yupResolver(SignUpSchema),
   });
@@ -36,13 +36,15 @@ export default function SignUp() {
       reset();
       router.push('/login');
     },
-    onError: (error: any, variable, context) => {
+    onError: (error: CustomSignupError, variable, context) => {
       console.log('onError -> ', error, variable);
-      const { type, message } = error.response.data;
-      setError(type, {
-        type,
-        message,
-      });
+      if (error.response) {
+        const { type, message } = error.response.data;
+        setError(type, {
+          type,
+          message,
+        });
+      }
     },
   });
 

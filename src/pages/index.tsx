@@ -34,6 +34,7 @@ const Home = () => {
       setName(user);
     }
   }, [isLoggedIn]);
+
   useEffect(() => {
     if (!getCookie('accessToken')) {
       dispatch(logout());
