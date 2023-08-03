@@ -52,6 +52,7 @@ instance.interceptors.response.use(
           console.log(err);
         }
       } else {
+        console.log('error', error.response);
         removeCookie('accessToken');
         removeCookie('refreshToken');
         localStorage.clear();
