@@ -60,7 +60,7 @@ instance.interceptors.response.use(
         // TODO: 배포 에러방지를 위한 임시 코드(수정필요)
         if (data.message === '토큰이 없습니다.') {
           // 로그인페이지로 리다이렉트
-          window.location.href = '/logn';
+          window.location.href = '/login';
         }
       }
     }
