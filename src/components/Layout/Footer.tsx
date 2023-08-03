@@ -20,29 +20,27 @@ export default function Footer() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex max-w-md px-4 py-2 bg-white border border-gray-100 rounded-t-xl flex-between">
       <Link href="/">
-        <div
-          className={`menu-item ${pathname === '/' ? 'active' : 'unactive'}`}
-        >
+        <a className={`menu-item ${pathname === '/' ? 'active' : 'unactive'}`}>
           {pathname === '/' ? (
             <RiHomeFill size="20" />
           ) : (
             <RiHomeLine size="20" />
           )}
           <p>홈</p>
-        </div>
+        </a>
       </Link>
       <Link href="/mypage">
-        <div
+        <a
           className={`menu-item ${
             pathname === '/mypage' ? 'active' : 'unactive'
           }`}
         >
           <BsFillPersonFill size="20" />
           <p>내정보</p>
-        </div>
+        </a>
       </Link>
       <Link href="/menu" className="relative">
-        <div>
+        <a>
           {showTooltip ? (
             <div className="absolute left-1/2 translate-x-[-50%] bottom-16">
               <Tooltip />
@@ -82,25 +80,25 @@ export default function Footer() {
               </div>
             </div>
           )}
-        </div>
+        </a>
       </Link>
       <Link href="/story">
-        <div
+        <a
           className={`menu-item ${
             pathname === '/story' ? 'active' : 'unactive'
           }`}
         >
           <BiNotepad size="20" />
           <p>스토리</p>
-        </div>
+        </a>
       </Link>
       <Link href="/all">
-        <div
+        <a
           className={`menu-item ${pathname === '/all' ? 'active' : 'unactive'}`}
         >
           <TbBorderAll size="20" />
           <p>전체</p>
-        </div>
+        </a>
       </Link>
     </div>
   );
