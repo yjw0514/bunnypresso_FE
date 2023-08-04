@@ -1,11 +1,7 @@
 import { updateProfile } from '@/lib/api/auth';
+import axios from 'axios';
 import Image from 'next/image';
-import React, {
-  ButtonHTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsCameraFill, BsCheckLg } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
@@ -26,17 +22,18 @@ export default function Profile() {
     setNewName(originName);
   }, [originName]);
 
-  const profileHandler = (e: React.MouseEvent<HTMLImageElement>) => {
+  const profileHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     profileRef.current?.click();
   };
 
-  const fileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const fileHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
     const file = e.target.files && e.target.files[0];
     if (file) {
       let reader = new FileReader();
-
       reader.readAsDataURL(file);
-
       reader.onloadend = () => {
         const previewImgUrl = reader.result;
         if (previewImgUrl) {
@@ -45,6 +42,12 @@ export default function Profile() {
             : setProfile(previewImgUrl);
         }
       };
+      formData.append('file', file);
+      try {
+        await updateProfile(formData);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   const editNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,44 +75,43 @@ export default function Profile() {
   return (
     <div className="flex flex-col items-center space-y-3">
       <div className="flex flex-col justify-between mb-3 h-[170px]">
-        <div
-          className="relative border border-gray-100 rounded-full shadow-sm w-36 h-36"
-          onClick={profileHandler}
-        >
-          <div className="absolute z-20 p-2 bg-gray-400 border-2 border-white rounded-full bottom-1 right-1">
-            <BsCameraFill fill="white" />
-          </div>
-
-          {profile ? (
-            <img
-              className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
-              src={profile}
-              alt="profile"
-              onClick={profileHandler}
-            />
-          ) : (
-            <img
-              className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
-              src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-              alt="defatulProfile"
-            />
-          )}
+        <div className="relative border border-gray-100 rounded-full shadow-sm w-36 h-36">
           <input
             type="file"
             src={profile}
             ref={profileRef}
             className="absolute top-0 left-0 w-0 h-0"
+            hidden
             accept="image/*"
             onChange={fileHandler}
+            name="file"
           />
+          <button type="button" onClick={profileHandler}>
+            <div className="absolute z-20 p-2 bg-gray-400 border-2 border-white rounded-full bottom-1 right-1">
+              <BsCameraFill fill="white" />
+            </div>
+            {profile ? (
+              <img
+                className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+                src={profile}
+                alt="profile"
+              />
+            ) : (
+              <img
+                className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+                src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+                alt="defatulProfile"
+              />
+            )}
+          </button>
         </div>
         {profile ? (
-          <p
+          <button
             className="p-1 text-sm text-center text-gray-500"
             onClick={() => setProfile('')}
           >
             프로필 사진 삭제
-          </p>
+          </button>
         ) : null}
       </div>
 

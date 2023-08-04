@@ -22,8 +22,18 @@ export const refreshChk = (refreshToken: string) => {
   return instance.post('/refresh', { refreshToken });
 };
 
-export const updateProfile = ({ name }: { name: string }) => {
-  return instance.patch('/update-profile', { name });
+type nameType = {
+  name: string;
+};
+export const updateProfile = (data: nameType | FormData) => {
+  return instance({
+    url: '/update-profile',
+    method: 'patch',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data,
+  });
 };
 
 const AuthApi = { signIn, signUp, updateProfile, refreshChk };
