@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { BsCheckLg } from 'react-icons/bs';
+import { BsCameraFill, BsCheckLg } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 
 export default function Profile() {
@@ -71,46 +71,60 @@ export default function Profile() {
   };
   return (
     <div className="flex flex-col items-center space-y-3">
-      <div className="relative mb-6 border border-gray-100 rounded-full shadow-sm w-36 h-36">
-        {profile ? (
-          <img
-            className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
-            src={profile}
-            alt="profile"
-            onClick={profileHandler}
-          />
-        ) : (
-          <img
-            className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
-            src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
-            alt="defatulProfile"
-            onClick={profileHandler}
-          />
-        )}
-        <input
-          type="file"
-          src={profile}
-          ref={profileRef}
-          className="absolute top-0 left-0 w-0 h-0"
-          accept="image/*"
-          onChange={fileHandler}
-        />
-      </div>
-      <div className="relative">
-        {editMode ? (
+      <div className="flex flex-col justify-between mb-3 h-[170px]">
+        <div
+          className="relative border border-gray-100 rounded-full shadow-sm w-36 h-36"
+          onClick={profileHandler}
+        >
+          <div className="absolute z-20 p-2 bg-gray-400 border-2 border-white rounded-full bottom-1 right-1">
+            <BsCameraFill fill="white" />
+          </div>
+
+          {profile ? (
+            <img
+              className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+              src={profile}
+              alt="profile"
+              onClick={profileHandler}
+            />
+          ) : (
+            <img
+              className="absolute top-0 bottom-0 left-0 right-0 w-full h-full rounded-full"
+              src="https://source.boringavatars.com/beam/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+              alt="defatulProfile"
+            />
+          )}
           <input
-            type="text"
-            value={newName}
-            maxLength={10}
-            onChange={editNameHandler}
-            size={12}
-            className="w-full p-2 border rounded-md border-primary focus:outline-none"
+            type="file"
+            src={profile}
+            ref={profileRef}
+            className="absolute top-0 left-0 w-0 h-0"
+            accept="image/*"
+            onChange={fileHandler}
           />
-        ) : (
-          <span className="text-lg font-bold">{originName}</span>
-        )}
+        </div>
+        {profile ? (
+          <p
+            className="p-1 text-sm text-center text-gray-500"
+            onClick={() => setProfile('')}
+          >
+            프로필 사진 삭제
+          </p>
+        ) : null}
+      </div>
+
+      <div className="flex justify-between w-full max-w-md px-3 py-4 bg-white border border-gray-200 rounded-lg shadow max-h-1/2 max-h-max">
+        <p className="p-2 font-bold text-md">닉네임</p>
         {editMode ? (
-          <div className="absolute -translate-y-1/2 top-1/2 -right-16 ">
+          <div className="flex items-center space-x-3">
+            <input
+              type="text"
+              value={newName}
+              maxLength={10}
+              onChange={editNameHandler}
+              size={12}
+              className="w-full p-1 border rounded-md border-primary focus:outline-none"
+            />
             <div className="flex items-center space-x-2 ">
               <button
                 onClick={cancelEdit}
@@ -128,12 +142,15 @@ export default function Profile() {
             </div>
           </div>
         ) : (
-          <button
-            onClick={() => setEditMode(true)}
-            className="absolute p-1 text-sm text-white -translate-y-1/2 rounded-lg top-1/2 -right-10 flex-center bg-primary"
-          >
-            <AiOutlineEdit size={18} />
-          </button>
+          <div className="flex items-center space-x-3">
+            <span className="p-1 font-medium text-md">{originName}</span>
+            <button
+              onClick={() => setEditMode(true)}
+              className="p-1 text-sm text-white rounded-lg flex-center bg-primary"
+            >
+              <AiOutlineEdit size={18} />
+            </button>
+          </div>
         )}
       </div>
     </div>
