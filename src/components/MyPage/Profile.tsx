@@ -1,10 +1,9 @@
-import { updateProfile } from '@/lib/api/auth';
-import axios from 'axios';
-import Image from 'next/image';
+import { updateProfileName, updateProfileImg } from '@/lib/api/auth';
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsCameraFill, BsCheckLg } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
+import { getProfileImg } from '@/lib/api/auth';
 
 export default function Profile() {
   const [originName, setOriginName] = useState<string>('');
@@ -14,8 +13,24 @@ export default function Profile() {
   const [editMode, setEditMode] = useState(false);
   const profileRef = useRef<HTMLInputElement>(null);
 
+  const getProfile = async () => {
+    try {
+      const {
+        data: { file },
+      } = await getProfileImg();
+
+      if (!file) {
+        return setProfile('');
+      }
+      setProfile(file);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     setOriginName(localStorage.getItem('name') ?? '');
+    getProfile();
   }, []);
 
   useEffect(() => {
@@ -44,12 +59,13 @@ export default function Profile() {
       };
       formData.append('file', file);
       try {
-        await updateProfile(formData);
+        await updateProfileImg(formData);
       } catch (err) {
         console.log(err);
       }
     }
   };
+
   const editNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value !== originName) setChangedName(true);
@@ -61,7 +77,7 @@ export default function Profile() {
     setEditMode(false);
     setChangedName(false);
     try {
-      await updateProfile({ name: newName });
+      await updateProfileName(newName);
       localStorage.setItem('name', newName);
     } catch (err) {
       console.log(err);
@@ -71,6 +87,15 @@ export default function Profile() {
     setEditMode(false);
     setChangedName(false);
     setNewName(originName);
+  };
+
+  const deleteProfile = async () => {
+    try {
+      await updateProfileImg(null);
+      setProfile('');
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="flex flex-col items-center space-y-3">
@@ -108,7 +133,7 @@ export default function Profile() {
         {profile ? (
           <button
             className="p-1 text-sm text-center text-gray-500"
-            onClick={() => setProfile('')}
+            onClick={deleteProfile}
           >
             프로필 사진 삭제
           </button>

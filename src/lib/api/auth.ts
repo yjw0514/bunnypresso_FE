@@ -25,9 +25,13 @@ export const refreshChk = (refreshToken: string) => {
 type nameType = {
   name: string;
 };
-export const updateProfile = (data: nameType | FormData) => {
+export const updateProfileName = (name: string) => {
+  return instance.patch('/update-name', { name });
+};
+
+export const updateProfileImg = (data: FormData | null) => {
   return instance({
-    url: '/update-profile',
+    url: '/update-file',
     method: 'patch',
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -36,5 +40,16 @@ export const updateProfile = (data: nameType | FormData) => {
   });
 };
 
-const AuthApi = { signIn, signUp, updateProfile, refreshChk };
+export const getProfileImg = () => {
+  return instance.get('/profile');
+};
+
+const AuthApi = {
+  signIn,
+  signUp,
+  updateProfileName,
+  updateProfileImg,
+  refreshChk,
+  getProfileImg,
+};
 export default AuthApi;
