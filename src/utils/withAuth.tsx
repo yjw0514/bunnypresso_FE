@@ -6,27 +6,28 @@ import { useAppDispatch } from '@/store/hooks';
 import { login, logout } from '@/store/slice/authSlice';
 
 const withAuth = (Component: NextPage | React.FC) => {
-  const Auth = ({ ...props }) => {
-    const dispatch = useAppDispatch();
-    const router = useRouter();
-    let isAuth = false;
+  // const Auth = ({ ...props }) => {
+  //   const dispatch = useAppDispatch();
+  //   const router = useRouter();
+  //   let isAuth = false;
 
-    useEffect(() => {
-      const accessToken = getCookie('accessToken');
-      const name = localStorage.getItem('name');
-      isAuth = !!accessToken && !!name;
-      if (!isAuth) {
-        dispatch(logout());
-        router.push('/login');
-        return;
-      }
-    }, [router]);
+  //   useEffect(() => {
+  //     const accessToken = getCookie('accessToken');
+  //     const name = localStorage.getItem('name');
+  //     isAuth = !!accessToken && !!name;
+  //     if (!isAuth) {
+  //       dispatch(logout());
+  //       router.push('/login');
+  //       return;
+  //     }
+  //   }, [router]);
 
-    dispatch(login());
-    return <Component {...props} />;
-  };
+  //   dispatch(login());
+  //   return <Component {...props} />;
+  // };
 
-  return Auth;
+  // return Auth;
+  return null;
 };
 
 export default withAuth;

@@ -22,9 +22,34 @@ export const refreshChk = (refreshToken: string) => {
   return instance.post('/refresh', { refreshToken });
 };
 
-export const updateProfile = ({ name }: { name: string }) => {
-  return instance.patch('/update-profile', { name });
+type nameType = {
+  name: string;
+};
+export const updateProfileName = (name: string) => {
+  return instance.patch('/update-name', { name });
 };
 
-const AuthApi = { signIn, signUp, updateProfile, refreshChk };
+export const updateProfileImg = (data: FormData | null) => {
+  return instance({
+    url: '/update-file',
+    method: 'patch',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data,
+  });
+};
+
+export const getProfileImg = () => {
+  return instance.get('/profile');
+};
+
+const AuthApi = {
+  signIn,
+  signUp,
+  updateProfileName,
+  updateProfileImg,
+  refreshChk,
+  getProfileImg,
+};
 export default AuthApi;
