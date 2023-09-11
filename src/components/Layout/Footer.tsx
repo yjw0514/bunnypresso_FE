@@ -97,7 +97,7 @@ export default function Footer() {
           className={`menu-item ${pathname === '/all' ? 'active' : 'unactive'}`}
         >
           <TbBorderAll size="20" />
-          <p>전체</p>
+          <p>새소식</p>
         </a>
       </Link>
     </div>
