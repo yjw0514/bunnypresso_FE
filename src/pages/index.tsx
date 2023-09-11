@@ -42,8 +42,8 @@ const Home = () => {
   }, [getCookie('accessToken')]);
 
   return (
-    <div className="h-screen pb-24 overflow-scroll bg-gray-100 wrapper scrollbar-hide">
-      <div>
+    <div className="flex flex-col h-screen pb-24 overflow-scroll bg-gray-100 wrapper scrollbar-hide">
+      <div className="grow">
         {isLoggedIn ? (
           <div className="flex items-center gap-4">
             <img
