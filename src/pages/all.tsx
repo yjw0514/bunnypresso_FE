@@ -1,5 +1,3 @@
-import None from '@/components/Common/None';
-import MainBanner from '@/components/Home/MainBanner';
 import Image from 'next/image';
 import React from 'react';
 import eventOne from '../../public/image/event/1.jpeg';
@@ -15,6 +13,7 @@ export default function All() {
           <Image
             src={eventOne}
             className="border rounded-lg border-slate-100"
+            priority
           />
           <p className="text-sm font-semibold">신메뉴 자허블 출시</p>
           <p className="text-xs text-gray-400">2023.09.01</p>
@@ -23,6 +22,7 @@ export default function All() {
           <Image
             src={eventTWe}
             className="border rounded-lg border-slate-100"
+            priority
           />
           <p className="text-sm font-semibold">카카페오페 사용 안내</p>
           <p className="text-xs text-gray-400">2023.05.05</p>
@@ -31,6 +31,7 @@ export default function All() {
           <Image
             src={eventThree}
             className="border rounded-lg border-slate-100"
+            priority
           />
           <p className="text-sm font-semibold">바나프레소 새로운 지점 오픈</p>
           <p className="text-xs text-gray-400">2023.01.01</p>
