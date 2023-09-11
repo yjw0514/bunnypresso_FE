@@ -24,7 +24,7 @@ export default function MainBanner() {
       </p>
       <Slider
         {...bannerSettings}
-        className="w-11/12 max-h-[500px] max-w-md mx-auto"
+        className="w-10/12 max-h-[500px] max-w-md mx-auto"
       >
         {new Array(3).fill(null).map((item, idx) => {
           return (
