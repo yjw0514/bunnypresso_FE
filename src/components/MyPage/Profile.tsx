@@ -4,12 +4,20 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { BsCameraFill, BsCheckLg } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { getProfileImg } from '@/lib/api/auth';
+import { v4 as uuid } from 'uuid';
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from 'firebase/storage';
+import storage from '@/firebase/storage';
 
 export default function Profile() {
   const [originName, setOriginName] = useState<string>('');
   const [newName, setNewName] = useState('');
   const [changedName, setChangedName] = useState(false);
-  const [profile, setProfile] = useState('');
+  const [profile, setProfile] = useState<null | string>(null); // 프로필 사진
   const [editMode, setEditMode] = useState(false);
   const profileRef = useRef<HTMLInputElement>(null);
 
@@ -18,11 +26,15 @@ export default function Profile() {
       const {
         data: { file },
       } = await getProfileImg();
-
       if (!file) {
-        return setProfile('');
+        return setProfile(null);
       }
-      setProfile(file);
+
+      // 기존에 저장된 이미지 파일이 있는 경우 파이어베이스에서 해당 이미지 파일을 가져온다.
+      const imageRef = ref(storage, `images/${file}`);
+      await getDownloadURL(imageRef).then((img) => {
+        setProfile(img);
+      });
     } catch (err) {
       console.log(err);
     }
@@ -57,9 +69,15 @@ export default function Profile() {
             : setProfile(previewImgUrl);
         }
       };
-      formData.append('file', file);
+      // formData.append('file', file);
       try {
-        await updateProfileImg(formData);
+        // 랜덤 이미지 이름을 생성하여 파이어베이스에 이미를 저장한다.
+        const uploadFileName = uuid() + '.png';
+        const imageRef = ref(storage, `images/${uploadFileName}`);
+        uploadBytes(imageRef, file);
+
+        // 파이어베이스에 저장한 이미지 이름은 몽고db에 저장한다.
+        await updateProfileImg(uploadFileName);
       } catch (err) {
         console.log(err);
       }
@@ -91,8 +109,9 @@ export default function Profile() {
 
   const deleteProfile = async () => {
     try {
+      await deleteObject(ref(storage, `images/${profile}`)); // 파이어베이스에서 해당 이미지 삭제
       await updateProfileImg(null);
-      setProfile('');
+      setProfile(null);
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +122,7 @@ export default function Profile() {
         <div className="relative border border-gray-100 rounded-full shadow-sm w-36 h-36">
           <input
             type="file"
-            src={profile}
+            src={profile ?? ''}
             ref={profileRef}
             className="absolute top-0 left-0 w-0 h-0"
             hidden
@@ -111,6 +130,7 @@ export default function Profile() {
             onChange={fileHandler}
             name="file"
           />
+
           <button type="button" onClick={profileHandler}>
             <div className="absolute z-20 p-2 bg-gray-400 border-2 border-white rounded-full bottom-1 right-1">
               <BsCameraFill fill="white" />

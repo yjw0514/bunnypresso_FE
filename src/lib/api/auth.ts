@@ -29,16 +29,19 @@ export const updateProfileName = (name: string) => {
   return instance.patch('/update-name', { name });
 };
 
-export const updateProfileImg = (data: FormData | null) => {
-  return instance({
-    url: '/update-file',
-    method: 'patch',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    data,
-  });
+export const updateProfileImg = (file: string | null) => {
+  return instance.patch('/update-file', { file });
 };
+// export const updateProfileImg = (data: string | null) => {
+//   return instance({
+//     url: '/update-file',
+//     method: 'patch',
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//     },
+//     data,
+//   });
+// };
 
 export const getProfileImg = () => {
   return instance.get('/profile');
