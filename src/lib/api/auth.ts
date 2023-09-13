@@ -1,6 +1,8 @@
 import { LoginValue } from '@/dto/loginDto';
 import { SignUpValue } from '@/dto/signupDto';
+import storage from '@/firebase/storage';
 import { instance } from '@/lib/api/index';
+import { getDownloadURL, ref } from 'firebase/storage';
 
 export const signIn = ({ email, password }: LoginValue) => {
   return instance.post(
@@ -43,8 +45,17 @@ export const updateProfileImg = (file: string | null) => {
 //   });
 // };
 
-export const getProfileImg = () => {
-  return instance.get('/profile');
+export const getProfileImg = async () => {
+  const {
+    data: { file },
+  } = await instance.get('/profile');
+  if (file) {
+    // 기존에 저장된 이미지 파일이 있는 경우 파이어베이스에서 해당 이미지 파일을 가져온다.
+    const imageRef = ref(storage, `images/${file}`);
+    const img = await getDownloadURL(imageRef);
+    return img;
+  }
+  return null;
 };
 
 const AuthApi = {

@@ -5,12 +5,7 @@ import { BsCameraFill, BsCheckLg } from 'react-icons/bs';
 import { IoMdClose } from 'react-icons/io';
 import { getProfileImg } from '@/lib/api/auth';
 import { v4 as uuid } from 'uuid';
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from 'firebase/storage';
+import { deleteObject, ref, uploadBytes } from 'firebase/storage';
 import storage from '@/firebase/storage';
 
 export default function Profile() {
@@ -23,18 +18,8 @@ export default function Profile() {
 
   const getProfile = async () => {
     try {
-      const {
-        data: { file },
-      } = await getProfileImg();
-      if (!file) {
-        return setProfile(null);
-      }
-
-      // 기존에 저장된 이미지 파일이 있는 경우 파이어베이스에서 해당 이미지 파일을 가져온다.
-      const imageRef = ref(storage, `images/${file}`);
-      await getDownloadURL(imageRef).then((img) => {
-        setProfile(img);
-      });
+      const file = await getProfileImg();
+      setProfile(file);
     } catch (err) {
       console.log(err);
     }
