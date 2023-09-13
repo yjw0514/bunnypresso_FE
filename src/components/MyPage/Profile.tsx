@@ -72,7 +72,7 @@ export default function Profile() {
       // formData.append('file', file);
       try {
         // 랜덤 이미지 이름을 생성하여 파이어베이스에 이미를 저장한다.
-        const uploadFileName = uuid() + '.png';
+        const uploadFileName = `${originName}-${uuid()}.png`;
         const imageRef = ref(storage, `images/${uploadFileName}`);
         uploadBytes(imageRef, file);
 
